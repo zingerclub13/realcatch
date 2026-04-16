@@ -27,6 +27,21 @@
     .hero-cta-ghost { display: inline-block; border: 1px solid rgba(255,255,255,0.25); color: white; padding: 15px 36px; border-radius: 8px; font-size: 17px; font-weight: 600; text-decoration: none; }
     .hero-sub { font-size: 13px; opacity: 0.4; margin-top: 10px; }
 
+    /* ---- SOCIAL PROOF / IMAGE SECTION ---- */
+    .proof-section { padding: 60px 20px; background: #111128; overflow: hidden; }
+    .proof-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; max-width: 1100px; margin: 0 auto; align-items: center; }
+    .proof-img { border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.5); position: relative; }
+    .proof-img img { width: 100%; height: 340px; object-fit: cover; display: block; }
+    .proof-img-badge { position: absolute; bottom: 16px; left: 16px; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); padding: 10px 16px; border-radius: 10px; color: white; font-size: 13px; font-weight: 600; border: 1px solid rgba(255,255,255,0.1); }
+    .proof-img-badge span { color: #4CAF50; font-size: 18px; font-weight: 800; display: block; }
+    .proof-text h2 { color: white; font-size: 32px; font-weight: 800; line-height: 1.2; margin-bottom: 18px; }
+    .proof-text h2 em { font-style: normal; color: #4CAF50; }
+    .proof-text p { color: rgba(255,255,255,0.5); font-size: 16px; line-height: 1.7; margin-bottom: 25px; }
+    .proof-stats { display: flex; gap: 35px; }
+    .proof-stat-item .proof-num { font-size: 36px; font-weight: 800; color: #4CAF50; }
+    .proof-stat-item .proof-lbl { font-size: 12px; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 1px; }
+    @media (max-width: 768px) { .proof-grid { grid-template-columns: 1fr; } .proof-img img { height: 220px; } }
+
     /* ---- LIVE DEMO SECTION ---- */
     .demo-section { padding: 40px 20px 80px; background: linear-gradient(180deg, #111128 0%, #0d0d1a 100%); }
     .demo-section h2 { text-align: center; color: white; font-size: 15px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.4; margin-bottom: 30px; }
@@ -197,6 +212,34 @@
     <a href="#demo" class="hero-cta-ghost">See Live Demo ↓</a>
   </div>
   <p class="hero-sub">No credit card required</p>
+</section>
+
+<!-- SOCIAL PROOF IMAGE SECTION -->
+<section class="proof-section">
+  <div class="proof-grid">
+    <div class="proof-img">
+      <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80" alt="Real estate deal - keys to a new property" loading="lazy">
+      <div class="proof-img-badge"><span>$2.4M+</span>Deal value found this month</div>
+    </div>
+    <div class="proof-text">
+      <h2>Investors are closing deals <em>days</em> before others even know about them</h2>
+      <p>While other investors wait for MLS listings, RealCatch users are already reaching out to motivated sellers with tax delinquencies, pending foreclosures, and distressed ownership situations — all sourced from public records before they hit the market.</p>
+      <div class="proof-stats">
+        <div class="proof-stat-item">
+          <div class="proof-num">142K</div>
+          <div class="proof-lbl">Properties Monitored</div>
+        </div>
+        <div class="proof-stat-item">
+          <div class="proof-num">23</div>
+          <div class="proof-lbl">Hot Leads Today</div>
+        </div>
+        <div class="proof-stat-item">
+          <div class="proof-num">8</div>
+          <div class="proof-lbl">Data Sources</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- LIVE DEMO DASHBOARD -->
