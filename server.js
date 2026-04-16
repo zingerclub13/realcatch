@@ -29,6 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Sessions
+app.set('trust proxy', 1);
 app.use(session({
   secret: process.env.SESSION_SECRET || 'realcatch-dev-secret',
   resave: false,
@@ -76,8 +77,12 @@ app.get('/health', (req, res) => {
 
 // Start cron jobs in production
 if (process.env.NODE_ENV === 'production') {
-  const { startScheduler } = require('./src/cron/scheduler');
-  startScheduler();
+  try {
+    const { startScheduler } = require('./src/cron/scheduler');
+    startScheduler();
+  } catch (err) {
+    console.error('Scheduler init failed (non-fatal):', err.message);
+  }
 }
 
 app.listen(PORT, () => {
