@@ -6,8 +6,10 @@
   <title>RealCatch — AI-Powered Real Estate Lead Intelligence</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1a1a2e; line-height: 1.6; background: #0d0d1a; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #e0e0e0; line-height: 1.6; background: #0d0d1a; }
+    a { color: inherit; }
 
+    /* NAV */
     .nav { display: flex; justify-content: space-between; align-items: center; padding: 18px 40px; max-width: 1300px; margin: 0 auto; }
     .nav-logo { font-size: 26px; font-weight: 800; color: white; text-decoration: none; letter-spacing: -0.5px; }
     .nav-logo span { color: #4CAF50; }
@@ -15,169 +17,107 @@
     .nav-links a { text-decoration: none; color: rgba(255,255,255,0.7); font-weight: 500; font-size: 15px; }
     .nav-links a.btn { background: #4CAF50; color: white; padding: 10px 22px; border-radius: 6px; font-weight: 600; }
 
-    /* ---- HERO ---- */
+    /* HERO */
     .hero { text-align: center; padding: 70px 20px 30px; background: linear-gradient(180deg, #0d0d1a 0%, #111128 100%); color: white; }
-    .hero-badge { display: inline-block; background: rgba(76,175,80,0.15); color: #4CAF50; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 20px; border: 1px solid rgba(76,175,80,0.3); }
-    .hero h1 { font-size: 52px; max-width: 800px; margin: 0 auto 20px; line-height: 1.1; font-weight: 800; letter-spacing: -1px; }
+    .beta-badge { display: inline-block; background: rgba(255,171,0,0.15); color: #ffab00; padding: 6px 18px; border-radius: 20px; font-size: 13px; font-weight: 700; margin-bottom: 20px; border: 1px solid rgba(255,171,0,0.35); letter-spacing: 0.5px; }
+    .hero h1 { font-size: 52px; max-width: 850px; margin: 0 auto 20px; line-height: 1.1; font-weight: 800; letter-spacing: -1px; }
     .hero h1 em { font-style: normal; color: #4CAF50; }
-    .hero p { font-size: 19px; opacity: 0.7; max-width: 600px; margin: 0 auto 35px; }
+    .hero p.sub { font-size: 19px; opacity: 0.6; max-width: 640px; margin: 0 auto 35px; }
     .hero-buttons { display: flex; gap: 15px; justify-content: center; margin-bottom: 15px; }
     .hero-cta { display: inline-block; background: #4CAF50; color: white; padding: 15px 36px; border-radius: 8px; font-size: 17px; font-weight: 700; text-decoration: none; transition: all 0.2s; }
     .hero-cta:hover { background: #43a047; transform: translateY(-1px); }
     .hero-cta-ghost { display: inline-block; border: 1px solid rgba(255,255,255,0.25); color: white; padding: 15px 36px; border-radius: 8px; font-size: 17px; font-weight: 600; text-decoration: none; }
     .hero-sub { font-size: 13px; opacity: 0.4; margin-top: 10px; }
 
-    /* ---- SOCIAL PROOF / IMAGE SECTION ---- */
-    .proof-section { padding: 60px 20px; background: #111128; overflow: hidden; }
-    .proof-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; max-width: 1100px; margin: 0 auto; align-items: center; }
-    .proof-img { border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.5); position: relative; }
-    .proof-img img { width: 100%; height: 340px; object-fit: cover; display: block; }
-    .proof-img-badge { position: absolute; bottom: 16px; left: 16px; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); padding: 10px 16px; border-radius: 10px; color: white; font-size: 13px; font-weight: 600; border: 1px solid rgba(255,255,255,0.1); }
-    .proof-img-badge span { color: #4CAF50; font-size: 18px; font-weight: 800; display: block; }
-    .proof-text h2 { color: white; font-size: 32px; font-weight: 800; line-height: 1.2; margin-bottom: 18px; }
-    .proof-text h2 em { font-style: normal; color: #4CAF50; }
-    .proof-text p { color: rgba(255,255,255,0.5); font-size: 16px; line-height: 1.7; margin-bottom: 25px; }
-    .proof-stats { display: flex; gap: 35px; }
-    .proof-stat-item .proof-num { font-size: 36px; font-weight: 800; color: #4CAF50; }
-    .proof-stat-item .proof-lbl { font-size: 12px; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 1px; }
-    @media (max-width: 768px) { .proof-grid { grid-template-columns: 1fr; } .proof-img img { height: 220px; } }
+    /* MAP SECTION */
+    .map-section { padding: 60px 20px 80px; background: linear-gradient(180deg, #111128, #0d0d1a); }
+    .map-section > h2 { text-align: center; color: white; font-size: 32px; margin-bottom: 8px; }
+    .map-section > p.map-sub { text-align: center; color: rgba(255,255,255,0.4); font-size: 15px; margin-bottom: 30px; }
+    .map-toolbar { display: flex; justify-content: center; align-items: center; gap: 12px; margin-bottom: 20px; }
+    .map-btn { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); padding: 8px 18px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+    .map-btn:hover { background: rgba(255,255,255,0.1); color: white; }
+    .map-btn.active { background: rgba(76,175,80,0.15); border-color: rgba(76,175,80,0.4); color: #4CAF50; }
+    .map-breadcrumb { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 20px; font-size: 14px; color: rgba(255,255,255,0.4); }
+    .map-breadcrumb span { cursor: pointer; transition: color 0.2s; }
+    .map-breadcrumb span:hover { color: white; }
+    .map-breadcrumb span.current { color: #4CAF50; font-weight: 700; cursor: default; }
+    .map-breadcrumb .sep { opacity: 0.3; cursor: default; }
 
-    /* ---- LIVE DEMO SECTION ---- */
-    .demo-section { padding: 40px 20px 80px; background: linear-gradient(180deg, #111128 0%, #0d0d1a 100%); }
-    .demo-section h2 { text-align: center; color: white; font-size: 15px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.4; margin-bottom: 30px; }
+    .map-container { max-width: 1000px; margin: 0 auto; position: relative; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 30px; min-height: 500px; overflow: hidden; }
 
-    .demo-wrapper { max-width: 1150px; margin: 0 auto; background: #1a1a2e; border-radius: 16px; border: 1px solid rgba(255,255,255,0.08); overflow: hidden; box-shadow: 0 25px 80px rgba(0,0,0,0.5); }
+    /* US Map SVG */
+    .us-map { width: 100%; height: auto; transition: opacity 0.4s ease; }
+    .us-map .state { fill: #1e1e3a; stroke: #2a2a4a; stroke-width: 1; transition: all 0.3s ease; cursor: default; }
+    .us-map .state.available { fill: #1a3a1a; stroke: #2d5a2d; cursor: pointer; }
+    .us-map .state.available:hover { fill: #265e26; stroke: #4CAF50; }
+    .us-map .state.active { fill: #2e7d32; stroke: #4CAF50; stroke-width: 2; }
+    .us-map .state-label { font-size: 9px; fill: rgba(255,255,255,0.2); pointer-events: none; font-weight: 600; }
+    .us-map .state.available .state-label, .us-map .state-label.available { fill: rgba(255,255,255,0.5); }
 
-    .demo-topbar { background: #12122a; padding: 14px 25px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.06); }
-    .demo-topbar-left { display: flex; align-items: center; gap: 12px; }
-    .demo-dots { display: flex; gap: 6px; }
-    .demo-dots span { width: 12px; height: 12px; border-radius: 50%; }
-    .demo-dots span:nth-child(1) { background: #ff5f57; }
-    .demo-dots span:nth-child(2) { background: #ffbd2e; }
-    .demo-dots span:nth-child(3) { background: #28c840; }
-    .demo-url { background: rgba(255,255,255,0.06); padding: 6px 16px; border-radius: 6px; font-size: 12px; color: rgba(255,255,255,0.4); font-family: monospace; }
-    .demo-topbar-right { display: flex; gap: 10px; align-items: center; }
-    .demo-tier { background: #4CAF50; padding: 3px 10px; border-radius: 10px; font-size: 11px; font-weight: 700; color: white; text-transform: uppercase; }
-    .demo-user { color: rgba(255,255,255,0.4); font-size: 12px; }
+    /* FL detail view */
+    .fl-detail { display: none; width: 100%; min-height: 460px; position: relative; }
+    .fl-detail.visible { display: block; }
+    .fl-detail .fl-map { width: 100%; height: auto; }
+    .fl-detail .county { fill: #1e1e3a; stroke: #2a2a4a; stroke-width: 0.5; transition: all 0.3s; }
+    .fl-detail .county.available { fill: #2e7d32; stroke: #4CAF50; stroke-width: 1.5; cursor: pointer; filter: drop-shadow(0 0 8px rgba(76,175,80,0.4)); }
+    .fl-detail .county.available:hover { fill: #43a047; filter: drop-shadow(0 0 14px rgba(76,175,80,0.6)); }
+    .fl-detail .county-label { font-size: 11px; fill: rgba(255,255,255,0.15); pointer-events: none; }
+    .fl-detail .county-label.available { fill: white; font-weight: 700; font-size: 13px; }
 
-    .demo-body { padding: 25px; }
+    .coming-soon-tag { position: absolute; top: 20px; right: 20px; background: rgba(255,171,0,0.15); color: #ffab00; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 700; border: 1px solid rgba(255,171,0,0.3); }
 
-    /* Stats row */
-    .demo-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px; }
-    .demo-stat { background: rgba(255,255,255,0.04); padding: 18px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.06); }
-    .demo-stat .label { color: rgba(255,255,255,0.35); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
-    .demo-stat .val { font-size: 32px; font-weight: 800; color: white; margin-top: 4px; }
-    .demo-stat .val.green { color: #4CAF50; }
-    .demo-stat .val.red { color: #ff5252; }
-    .demo-stat .val.amber { color: #ffab00; }
-    .demo-stat .change { font-size: 11px; color: #4CAF50; margin-top: 4px; }
+    /* Volusia popup */
+    .county-popup { display: none; position: absolute; background: #1a1a2e; border: 1px solid rgba(76,175,80,0.3); border-radius: 12px; padding: 24px; width: 320px; box-shadow: 0 20px 60px rgba(0,0,0,0.6); z-index: 10; }
+    .county-popup.visible { display: block; }
+    .county-popup h3 { color: white; font-size: 20px; margin-bottom: 4px; }
+    .county-popup .county-state { color: #4CAF50; font-size: 13px; font-weight: 600; margin-bottom: 14px; }
+    .county-popup .popup-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+    .county-popup .popup-stat { background: rgba(255,255,255,0.04); padding: 10px; border-radius: 8px; }
+    .county-popup .popup-stat .pval { font-size: 22px; font-weight: 800; color: white; }
+    .county-popup .popup-stat .plbl { font-size: 10px; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.5px; }
+    .county-popup .popup-cta { display: block; background: #4CAF50; color: white; text-align: center; padding: 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 14px; transition: background 0.2s; }
+    .county-popup .popup-cta:hover { background: #43a047; }
+    .county-popup .popup-close { position: absolute; top: 10px; right: 14px; color: rgba(255,255,255,0.3); cursor: pointer; font-size: 18px; background: none; border: none; }
 
-    /* Filters */
-    .demo-filters { display: flex; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; }
-    .demo-filter { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); padding: 8px 14px; border-radius: 6px; color: rgba(255,255,255,0.5); font-size: 13px; cursor: pointer; transition: all 0.2s; user-select: none; }
-    .demo-filter:hover { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.8); }
-    .demo-filter.active { background: rgba(76,175,80,0.12); border-color: rgba(76,175,80,0.3); color: #4CAF50; }
-
-    /* Lead table */
-    .demo-table { width: 100%; border-collapse: collapse; }
-    .demo-table th { text-align: left; padding: 10px 14px; color: rgba(255,255,255,0.3); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid rgba(255,255,255,0.06); font-weight: 600; }
-    .demo-table td { padding: 14px; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: top; }
-    .demo-table tr { transition: all 0.25s ease; }
-    .demo-table tr:hover { background: rgba(255,255,255,0.02); }
-    .demo-table tr.hidden-row { display: none; }
-
-    .score-badge { display: inline-block; padding: 5px 14px; border-radius: 20px; font-weight: 800; color: white; font-size: 15px; min-width: 50px; text-align: center; }
-    .score-hot { background: linear-gradient(135deg, #ff1744, #d50000); box-shadow: 0 2px 12px rgba(255,23,68,0.3); }
-    .score-warm { background: linear-gradient(135deg, #ff9100, #ff6d00); box-shadow: 0 2px 12px rgba(255,145,0,0.3); }
-    .score-cool { background: linear-gradient(135deg, #4CAF50, #2e7d32); box-shadow: 0 2px 12px rgba(76,175,80,0.3); }
-
-    .lead-type { display: inline-block; padding: 3px 10px; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
-    .lt-foreclosure { background: rgba(255,23,68,0.12); color: #ff5252; }
-    .lt-tax { background: rgba(255,145,0,0.12); color: #ffab00; }
-    .lt-absentee { background: rgba(33,150,243,0.12); color: #42a5f5; }
-    .lt-undervalued { background: rgba(156,39,176,0.12); color: #ba68c8; }
-
-    .addr { color: white; font-weight: 600; font-size: 14px; }
-    .addr-sub { color: rgba(255,255,255,0.35); font-size: 12px; margin-top: 2px; }
-    .owner { color: rgba(255,255,255,0.6); font-size: 13px; }
-    .owner-flag { color: #42a5f5; font-size: 11px; }
-    .value { color: rgba(255,255,255,0.7); font-size: 14px; font-weight: 600; }
-    .summary { color: rgba(255,255,255,0.45); font-size: 12px; line-height: 1.5; max-width: 280px; }
-    .ai-tag { display: inline-block; background: rgba(76,175,80,0.1); color: #4CAF50; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 3px; margin-bottom: 4px; letter-spacing: 0.5px; }
-
-    .signals-row { display: flex; gap: 5px; margin-top: 6px; flex-wrap: wrap; }
-    .signal-pill { display: inline-block; background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.4); padding: 2px 8px; border-radius: 3px; font-size: 10px; }
-
-    /* Blurred overlay for locked leads */
-    .locked-row td { position: relative; }
-    .locked-row .addr, .locked-row .owner, .locked-row .value, .locked-row .summary { filter: blur(5px); user-select: none; }
-    .unlock-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2; text-align: center; }
-    .unlock-btn { background: #4CAF50; color: white; border: none; padding: 8px 18px; border-radius: 6px; font-weight: 700; font-size: 12px; cursor: pointer; white-space: nowrap; }
-
-    /* ---- EMAIL PREVIEW ---- */
-    .email-demo-section { padding: 80px 20px; background: #0d0d1a; }
-    .email-demo-section > h2 { text-align: center; color: white; font-size: 36px; margin-bottom: 15px; }
-    .email-demo-section > p { text-align: center; color: rgba(255,255,255,0.5); margin-bottom: 40px; font-size: 17px; }
-
-    .email-preview { max-width: 620px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
-    .email-header { background: #1a1a2e; color: white; padding: 22px 28px; }
-    .email-header h3 { margin: 0 0 3px; font-size: 20px; }
-    .email-header p { margin: 0; opacity: 0.6; font-size: 13px; }
-    .email-body { padding: 25px 28px; }
-    .email-lead { display: flex; justify-content: space-between; align-items: flex-start; padding: 16px 0; border-bottom: 1px solid #f0f0f0; }
-    .email-lead:last-child { border: none; }
-    .email-lead-info h4 { font-size: 15px; margin-bottom: 3px; color: #1a1a2e; }
-    .email-lead-info p { font-size: 13px; color: #666; margin: 0; }
-    .email-lead-score { text-align: center; flex-shrink: 0; margin-left: 15px; }
-    .email-lead-score .num { font-size: 28px; font-weight: 800; }
-    .email-lead-score .num.hot { color: #e53935; }
-    .email-lead-score .num.warm { color: #ff9800; }
-    .email-lead-score .lbl { font-size: 10px; color: #999; text-transform: uppercase; letter-spacing: 1px; }
-    .email-cta { display: block; text-align: center; background: #4CAF50; color: white; padding: 14px; border-radius: 8px; text-decoration: none; font-weight: 700; margin-top: 15px; font-size: 15px; }
-
-    /* ---- HOW IT WORKS ---- */
+    /* HOW IT WORKS */
     .how-section { padding: 80px 20px; background: #111128; }
-    .how-section h2 { text-align: center; color: white; font-size: 36px; margin-bottom: 60px; }
+    .how-section h2 { text-align: center; color: white; font-size: 36px; margin-bottom: 15px; }
+    .how-section > p { text-align: center; color: rgba(255,255,255,0.4); font-size: 16px; margin-bottom: 60px; }
     .how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1000px; margin: 0 auto; }
     .how-card { text-align: center; padding: 35px 25px; background: rgba(255,255,255,0.03); border-radius: 14px; border: 1px solid rgba(255,255,255,0.06); }
-    .how-num { width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #4CAF50, #2e7d32); color: white; font-size: 22px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+    .how-icon { font-size: 40px; margin-bottom: 16px; }
     .how-card h3 { color: white; margin-bottom: 10px; font-size: 18px; }
     .how-card p { color: rgba(255,255,255,0.45); font-size: 14px; }
 
-    /* ---- DATA SOURCES ---- */
-    .sources { padding: 60px 20px; background: #0d0d1a; text-align: center; }
-    .sources h2 { color: white; font-size: 15px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.3; margin-bottom: 25px; }
-    .source-logos { display: flex; justify-content: center; gap: 50px; flex-wrap: wrap; align-items: center; }
-    .source-item { color: rgba(255,255,255,0.2); font-size: 14px; font-weight: 600; padding: 12px 20px; border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; }
+    /* BETA CTA */
+    .beta-section { padding: 80px 20px; background: #0d0d1a; text-align: center; }
+    .beta-card { max-width: 700px; margin: 0 auto; background: linear-gradient(135deg, rgba(76,175,80,0.08), rgba(76,175,80,0.02)); border: 1px solid rgba(76,175,80,0.2); border-radius: 20px; padding: 50px 40px; }
+    .beta-card h2 { color: white; font-size: 34px; margin-bottom: 12px; }
+    .beta-card p { color: rgba(255,255,255,0.5); font-size: 16px; margin-bottom: 30px; }
+    .beta-card .beta-live { display: inline-flex; align-items: center; gap: 8px; color: #4CAF50; font-weight: 700; font-size: 15px; margin-bottom: 25px; }
+    .beta-card .beta-live .dot { width: 8px; height: 8px; border-radius: 50%; background: #4CAF50; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-    /* ---- PRICING ---- */
-    .pricing { padding: 80px 20px; background: #111128; }
-    .pricing h2 { text-align: center; color: white; font-size: 36px; margin-bottom: 15px; }
-    .pricing .subtitle { text-align: center; color: rgba(255,255,255,0.4); margin-bottom: 50px; font-size: 16px; }
-    .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 950px; margin: 0 auto; }
-    .price-card { background: rgba(255,255,255,0.03); padding: 35px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.06); position: relative; }
-    .price-card.featured { border-color: #4CAF50; background: rgba(76,175,80,0.06); }
-    .price-card.featured::before { content: 'MOST POPULAR'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #4CAF50; color: white; font-size: 10px; font-weight: 800; padding: 4px 14px; border-radius: 10px; letter-spacing: 1px; }
-    .price-card h3 { font-size: 20px; color: white; margin-bottom: 5px; }
-    .price-card .price { font-size: 44px; font-weight: 800; color: white; margin: 15px 0; }
-    .price-card .price span { font-size: 16px; opacity: 0.4; font-weight: 400; }
-    .price-card ul { list-style: none; margin: 20px 0 30px; }
-    .price-card li { padding: 7px 0; font-size: 14px; color: rgba(255,255,255,0.6); }
-    .price-card li::before { content: '✓ '; color: #4CAF50; font-weight: bold; }
-    .price-card a { display: block; text-align: center; padding: 14px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 15px; }
-    .price-card a.primary { background: #4CAF50; color: white; }
-    .price-card a.ghost { border: 1px solid rgba(255,255,255,0.15); color: white; }
+    /* ROADMAP */
+    .roadmap { padding: 80px 20px; background: #111128; }
+    .roadmap h2 { text-align: center; color: white; font-size: 36px; margin-bottom: 50px; }
+    .roadmap-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; max-width: 1000px; margin: 0 auto; }
+    .rm-card { padding: 25px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.02); }
+    .rm-card.live { border-color: rgba(76,175,80,0.3); background: rgba(76,175,80,0.05); }
+    .rm-badge { display: inline-block; padding: 3px 10px; border-radius: 10px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
+    .rm-live { background: rgba(76,175,80,0.2); color: #4CAF50; }
+    .rm-next { background: rgba(33,150,243,0.15); color: #42a5f5; }
+    .rm-soon { background: rgba(255,171,0,0.15); color: #ffab00; }
+    .rm-future { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.35); }
+    .rm-card h4 { color: white; font-size: 15px; margin-bottom: 6px; }
+    .rm-card p { color: rgba(255,255,255,0.35); font-size: 13px; }
 
-    /* ---- CTA ---- */
-    .cta-bottom { text-align: center; padding: 80px 20px; background: #0d0d1a; }
-    .cta-bottom h2 { font-size: 40px; color: white; margin-bottom: 15px; }
-    .cta-bottom p { color: rgba(255,255,255,0.45); margin-bottom: 30px; font-size: 18px; }
-
+    /* FOOTER */
     .footer { text-align: center; padding: 30px; color: rgba(255,255,255,0.2); font-size: 13px; background: #0d0d1a; border-top: 1px solid rgba(255,255,255,0.05); }
 
     @media (max-width: 900px) {
-      .demo-stats { grid-template-columns: repeat(2, 1fr); }
-      .price-grid, .how-grid { grid-template-columns: 1fr; max-width: 400px; }
+      .how-grid { grid-template-columns: 1fr; max-width: 400px; }
+      .roadmap-grid { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 768px) {
       .hero h1 { font-size: 34px; }
@@ -185,8 +125,7 @@
       .nav-links { gap: 12px; }
       .nav-links a { font-size: 13px; }
       .hero-buttons { flex-direction: column; align-items: center; }
-      .demo-stats { grid-template-columns: 1fr 1fr; }
-      .demo-table { font-size: 12px; }
+      .roadmap-grid { grid-template-columns: 1fr; max-width: 350px; }
     }
   </style>
 </head>
@@ -195,8 +134,8 @@
 <nav class="nav">
   <a href="/" class="nav-logo">Real<span>Catch</span></a>
   <div class="nav-links">
-    <a href="#demo">Demo</a>
-    <a href="#pricing">Pricing</a>
+    <a href="#map">Coverage</a>
+    <a href="#roadmap">Roadmap</a>
     <a href="/login">Log In</a>
     <a href="/signup" class="btn">Start Free</a>
   </div>
@@ -204,348 +143,278 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-badge">Scanning 142,000+ Volusia County properties daily</div>
-  <h1>Find <em>motivated sellers</em><br>before your competition</h1>
-  <p>AI scans tax records, foreclosure auctions, and ownership changes every night — then scores and ranks the best deals for you by morning.</p>
+  <div class="beta-badge">🚧 BETA — Currently live in Volusia County, FL</div>
+  <h1>AI-powered <em>real estate intelligence</em> for every county in America</h1>
+  <p class="sub">We scan public records overnight — tax delinquencies, foreclosures, ownership changes — and deliver scored, AI-analyzed leads by morning. Choose your county below.</p>
   <div class="hero-buttons">
-    <a href="/signup" class="hero-cta">Start Free — See 3 Leads Now</a>
-    <a href="#demo" class="hero-cta-ghost">See Live Demo ↓</a>
+    <a href="#map" class="hero-cta">Explore the Map</a>
+    <a href="https://volusia.realcatch.io" class="hero-cta-ghost">Go to Volusia County →</a>
   </div>
-  <p class="hero-sub">No credit card required</p>
+  <p class="hero-sub">More counties coming Q3 2026</p>
 </section>
 
-<!-- SOCIAL PROOF IMAGE SECTION -->
-<section class="proof-section">
-  <div class="proof-grid">
-    <div class="proof-img">
-      <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80" alt="Real estate deal - keys to a new property" loading="lazy">
-      <div class="proof-img-badge"><span>$2.4M+</span>Deal value found this month</div>
-    </div>
-    <div class="proof-text">
-      <h2>Investors are closing deals <em>days</em> before others even know about them</h2>
-      <p>While other investors wait for MLS listings, RealCatch users are already reaching out to motivated sellers with tax delinquencies, pending foreclosures, and distressed ownership situations — all sourced from public records before they hit the market.</p>
-      <div class="proof-stats">
-        <div class="proof-stat-item">
-          <div class="proof-num">142K</div>
-          <div class="proof-lbl">Properties Monitored</div>
-        </div>
-        <div class="proof-stat-item">
-          <div class="proof-num">23</div>
-          <div class="proof-lbl">Hot Leads Today</div>
-        </div>
-        <div class="proof-stat-item">
-          <div class="proof-num">8</div>
-          <div class="proof-lbl">Data Sources</div>
-        </div>
-      </div>
-    </div>
+<!-- INTERACTIVE MAP -->
+<section class="map-section" id="map">
+  <h2>Select Your Market</h2>
+  <p class="map-sub">Click into a state to see available counties. Green = live data.</p>
+
+  <div class="map-breadcrumb" id="breadcrumb">
+    <span class="current">United States</span>
   </div>
-</section>
 
-<!-- LIVE DEMO DASHBOARD -->
-<section class="demo-section" id="demo">
-  <h2>Live product preview</h2>
-  <div class="demo-wrapper">
-    <div class="demo-topbar">
-      <div class="demo-topbar-left">
-        <div class="demo-dots"><span></span><span></span><span></span></div>
-        <div class="demo-url">realcatch.io/dashboard</div>
-      </div>
-      <div class="demo-topbar-right">
-        <span class="demo-tier">PRO</span>
-        <span class="demo-user">investor@example.com</span>
-      </div>
-    </div>
-    <div class="demo-body">
-      <!-- Stats -->
-      <div class="demo-stats">
-        <div class="demo-stat">
-          <div class="label" id="statLabel">Hot Leads Today</div>
-          <div class="val red" id="statVal">23</div>
-          <div class="change" id="statChange">↑ 8 from yesterday</div>
-        </div>
-        <div class="demo-stat">
-          <div class="label">Avg Lead Score</div>
-          <div class="val green">67</div>
-          <div class="change">↑ 4 pts this week</div>
-        </div>
-        <div class="demo-stat">
-          <div class="label">Properties Tracked</div>
-          <div class="val" style="color:white">142,847</div>
-          <div class="change">↑ 312 new this week</div>
-        </div>
-        <div class="demo-stat">
-          <div class="label">Foreclosure Auctions</div>
-          <div class="val amber">47</div>
-          <div class="change">Next 30 days</div>
-        </div>
-      </div>
-
-      <!-- Filters -->
-      <div class="demo-filters">
-        <div class="demo-filter active" data-filter="all" onclick="filterDemo(this)">All Types</div>
-        <div class="demo-filter" data-filter="foreclosure" onclick="filterDemo(this)">Foreclosure</div>
-        <div class="demo-filter" data-filter="tax" onclick="filterDemo(this)">Tax Delinquent</div>
-        <div class="demo-filter" data-filter="absentee" onclick="filterDemo(this)">Absentee Owner</div>
-        <div class="demo-filter" data-filter="undervalued" onclick="filterDemo(this)">Undervalued</div>
-        <div class="demo-filter" data-filter="score70" onclick="filterDemo(this)">Score 70+</div>
-      </div>
-
-      <!-- Leads table -->
-      <table class="demo-table">
-        <thead>
-          <tr>
-            <th>Score</th>
-            <th>Property</th>
-            <th>Type</th>
-            <th>Owner</th>
-            <th>Value</th>
-            <th>AI Analysis</th>
-          </tr>
-        </thead>
-        <tbody id="demoLeads">
-          <tr data-type="foreclosure" data-score="92">
-            <td><span class="score-badge score-hot">92</span></td>
-            <td>
-              <div class="addr">1847 S Ridgewood Ave</div>
-              <div class="addr-sub">Daytona Beach, FL 32119</div>
-              <div class="signals-row">
-                <span class="signal-pill">Tax Delinquent 3yr</span>
-                <span class="signal-pill">Foreclosure</span>
-              </div>
-            </td>
-            <td><span class="lead-type lt-foreclosure">Foreclosure</span></td>
-            <td>
-              <div class="owner">GARCIA MARTINEZ LUIS</div>
-              <div class="owner-flag">📍 New York, NY</div>
-            </td>
-            <td><div class="value">$187,500</div></td>
-            <td>
-              <div class="ai-tag">AI SUMMARY</div>
-              <div class="summary">3-year tax delinquent headed to foreclosure auction May 2. Absentee owner in NY — assessed at $187K but last sold for $95K in 2019. Highly motivated.</div>
-            </td>
-          </tr>
-          <tr data-type="tax" data-score="85">
-            <td><span class="score-badge score-hot">85</span></td>
-            <td>
-              <div class="addr">443 Beville Rd Unit 12</div>
-              <div class="addr-sub">South Daytona, FL 32119</div>
-              <div class="signals-row">
-                <span class="signal-pill">Tax Delinquent</span>
-                <span class="signal-pill">Non-Homestead</span>
-                <span class="signal-pill">LLC</span>
-              </div>
-            </td>
-            <td><span class="lead-type lt-tax">Tax Delinq.</span></td>
-            <td>
-              <div class="owner">SUNSHINE RENTALS LLC</div>
-              <div class="owner-flag">📍 Atlanta, GA</div>
-            </td>
-            <td><div class="value">$142,000</div></td>
-            <td>
-              <div class="ai-tag">AI SUMMARY</div>
-              <div class="summary">Out-of-state LLC owner with $4,200 in delinquent taxes. Non-homestead condo likely a neglected rental. Good candidate for off-market acquisition.</div>
-            </td>
-          </tr>
-          <tr data-type="absentee" data-score="71">
-            <td><span class="score-badge score-warm">71</span></td>
-            <td>
-              <div class="addr">2200 S Atlantic Ave #1604</div>
-              <div class="addr-sub">Daytona Beach Shores, FL 32118</div>
-              <div class="signals-row">
-                <span class="signal-pill">Absentee Owner</span>
-                <span class="signal-pill">Price Anomaly</span>
-              </div>
-            </td>
-            <td><span class="lead-type lt-absentee">Absentee</span></td>
-            <td>
-              <div class="owner">THORNTON ROBERT & MARY</div>
-              <div class="owner-flag">📍 Chicago, IL</div>
-            </td>
-            <td><div class="value">$310,000</div></td>
-            <td>
-              <div class="ai-tag">AI SUMMARY</div>
-              <div class="summary">Oceanfront condo assessed at $310K but sold for $195K last year — 37% below value. Elderly out-of-state owners, likely estate planning situation.</div>
-            </td>
-          </tr>
-          <tr data-type="undervalued" data-score="64">
-            <td><span class="score-badge score-warm">64</span></td>
-            <td>
-              <div class="addr">1050 N Nova Rd</div>
-              <div class="addr-sub">Holly Hill, FL 32117</div>
-              <div class="signals-row">
-                <span class="signal-pill">Recent Sale</span>
-                <span class="signal-pill">Undervalued</span>
-              </div>
-            </td>
-            <td><span class="lead-type lt-undervalued">Undervalued</span></td>
-            <td>
-              <div class="owner">QUICK FLIP PROPERTIES INC</div>
-              <div class="owner-flag">📍 Orlando, FL</div>
-            </td>
-            <td><div class="value">$225,000</div></td>
-            <td>
-              <div class="ai-tag">AI SUMMARY</div>
-              <div class="summary">Sold 3 weeks ago for $148K — well below $225K assessed. Name suggests wholesale flip. Watch for relisting at higher price within 60 days.</div>
-            </td>
-          </tr>
-          <!-- Locked rows to show the paywall -->
-          <tr class="locked-row" data-type="tax" data-score="61">
-            <td><span class="score-badge score-warm">61</span></td>
-            <td style="position:relative">
-              <div class="addr">785 Derbyshire Rd</div>
-              <div class="addr-sub">Daytona Beach, FL 32117</div>
-              <span class="unlock-overlay"><button class="unlock-btn" onclick="window.location='/signup'">Sign up to unlock all leads →</button></span>
-            </td>
-            <td><span class="lead-type lt-tax">Tax Delinq.</span></td>
-            <td><div class="owner">WILLIAMS JAMES R</div></td>
-            <td><div class="value">$165,000</div></td>
-            <td><div class="summary">Tax delinquent for 2 years with non-homestead status. Owner address is local but property appears vacant based on...</div></td>
-          </tr>
-          <tr class="locked-row" data-type="absentee" data-score="55">
-            <td><span class="score-badge score-cool">55</span></td>
-            <td>
-              <div class="addr">920 Mason Ave</div>
-              <div class="addr-sub">Daytona Beach, FL 32117</div>
-            </td>
-            <td><span class="lead-type lt-absentee">Absentee</span></td>
-            <td><div class="owner">PATEL HOLDINGS LLC</div></td>
-            <td><div class="value">$198,000</div></td>
-            <td><div class="summary">Out-of-state LLC owner based in New Jersey. Property is a vacant lot in a neighborhood with recent development...</div></td>
-          </tr>
-        </tbody>
-      </table>
-      <div id="noResults" style="text-align:center;padding:40px;color:rgba(255,255,255,0.3);display:none">No leads match this filter. Try "All Types" to see everything.</div>
-    </div>
+  <div class="map-toolbar">
+    <button class="map-btn active" id="btnUSA" onclick="showUSA()">🇺🇸 USA</button>
+    <button class="map-btn" id="btnFL" onclick="zoomFlorida()">🌴 Florida</button>
   </div>
-</section>
 
-<!-- EMAIL PREVIEW -->
-<section class="email-demo-section">
-  <h2>Leads delivered to your inbox</h2>
-  <p>Get a daily or weekly digest — here's what it looks like</p>
-  <div class="email-preview">
-    <div class="email-header">
-      <h3>RealCatch Daily Intel — 23 New Leads</h3>
-      <p>Wednesday, April 16 2026 • Volusia County, FL</p>
-    </div>
-    <div class="email-body">
-      <div class="email-lead">
-        <div class="email-lead-info">
-          <h4>1847 S Ridgewood Ave, Daytona Beach 32119</h4>
-          <p>Foreclosure auction May 2 — 3yr tax delinquent, absentee owner in NY. Assessed $187K, last sold $95K.</p>
-        </div>
-        <div class="email-lead-score">
-          <div class="num hot">92</div>
-          <div class="lbl">Score</div>
-        </div>
-      </div>
-      <div class="email-lead">
-        <div class="email-lead-info">
-          <h4>443 Beville Rd Unit 12, South Daytona 32119</h4>
-          <p>LLC owner in Atlanta, $4.2K delinquent taxes. Non-homestead condo, likely neglected rental.</p>
-        </div>
-        <div class="email-lead-score">
-          <div class="num warm">85</div>
-          <div class="lbl">Score</div>
-        </div>
-      </div>
-      <div class="email-lead">
-        <div class="email-lead-info">
-          <h4>2200 S Atlantic Ave #1604, DB Shores 32118</h4>
-          <p>Oceanfront condo sold 37% below assessed value. Out-of-state elderly owners — possible estate sale.</p>
-        </div>
-        <div class="email-lead-score">
-          <div class="num warm">71</div>
-          <div class="lbl">Score</div>
-        </div>
-      </div>
-      <a href="/signup" class="email-cta">View All 23 Leads →</a>
-    </div>
-  </div>
-</section>
+  <div class="map-container" id="mapContainer">
+    <!-- === USA MAP (simplified SVG) === -->
+    <svg id="usaMap" class="us-map" viewBox="0 0 960 600" xmlns="http://www.w3.org/2000/svg">
+      <!-- All greyed-out states (simplified paths) -->
+      <g id="states">
+        <path class="state" id="WA" d="M125,35 L175,30 L195,35 L200,60 L190,80 L170,85 L140,80 L120,60 Z"><title>Washington</title></path>
+        <path class="state" id="OR" d="M120,60 L140,80 L170,85 L190,80 L195,100 L185,120 L135,115 L110,90 Z"><title>Oregon</title></path>
+        <path class="state" id="CA" d="M110,90 L135,115 L140,150 L145,190 L140,230 L120,240 L100,210 L95,170 L100,130 Z"><title>California</title></path>
+        <path class="state" id="NV" d="M135,115 L185,120 L180,170 L170,200 L145,190 L140,150 Z"><title>Nevada</title></path>
+        <path class="state" id="ID" d="M170,85 L190,80 L200,60 L220,55 L230,90 L220,120 L195,115 L185,120 L195,100 Z"><title>Idaho</title></path>
+        <path class="state" id="MT" d="M200,60 L220,55 L300,45 L310,50 L305,85 L280,90 L250,85 L230,90 Z"><title>Montana</title></path>
+        <path class="state" id="WY" d="M230,90 L250,85 L280,90 L305,85 L300,130 L240,135 L230,130 Z"><title>Wyoming</title></path>
+        <path class="state" id="UT" d="M185,120 L195,115 L220,120 L230,130 L240,135 L235,175 L200,175 L180,170 Z"><title>Utah</title></path>
+        <path class="state" id="CO" d="M240,135 L300,130 L310,140 L310,180 L240,185 L235,175 Z"><title>Colorado</title></path>
+        <path class="state" id="AZ" d="M140,230 L145,190 L170,200 L180,170 L200,175 L205,220 L190,250 L155,255 Z"><title>Arizona</title></path>
+        <path class="state" id="NM" d="M200,175 L235,175 L240,185 L245,240 L230,260 L195,260 L190,250 L205,220 Z"><title>New Mexico</title></path>
+        <path class="state" id="ND" d="M310,50 L380,48 L385,55 L390,90 L310,95 L305,85 Z"><title>North Dakota</title></path>
+        <path class="state" id="SD" d="M310,95 L390,90 L395,100 L395,135 L315,140 L300,130 Z"><title>South Dakota</title></path>
+        <path class="state" id="NE" d="M300,130 L315,140 L395,135 L400,150 L395,170 L310,175 L310,140 Z"><title>Nebraska</title></path>
+        <path class="state" id="KS" d="M310,175 L395,170 L400,180 L400,215 L315,220 L310,180 Z"><title>Kansas</title></path>
+        <path class="state" id="OK" d="M310,220 L315,220 L400,215 L405,230 L400,265 L340,265 L310,255 L295,260 L300,230 Z"><title>Oklahoma</title></path>
+        <path class="state" id="TX" d="M295,260 L310,255 L340,265 L400,265 L420,290 L410,340 L380,380 L340,395 L300,380 L280,340 L270,300 Z"><title>Texas</title></path>
+        <path class="state" id="MN" d="M385,55 L420,50 L440,48 L445,60 L450,100 L445,120 L395,125 L395,100 L390,90 Z"><title>Minnesota</title></path>
+        <path class="state" id="IA" d="M395,125 L445,120 L455,130 L460,160 L450,175 L400,180 L395,170 L400,150 L395,135 Z"><title>Iowa</title></path>
+        <path class="state" id="MO" d="M400,180 L450,175 L460,190 L470,215 L465,250 L440,260 L420,250 L405,230 L400,215 Z"><title>Missouri</title></path>
+        <path class="state" id="AR" d="M420,250 L440,260 L465,250 L470,270 L465,300 L430,300 L415,290 Z"><title>Arkansas</title></path>
+        <path class="state" id="LA" d="M415,290 L430,300 L465,300 L475,320 L480,350 L450,365 L430,350 L420,310 Z"><title>Louisiana</title></path>
+        <path class="state" id="WI" d="M450,100 L480,60 L510,65 L520,80 L515,100 L510,130 L460,135 L455,130 L445,120 Z"><title>Wisconsin</title></path>
+        <path class="state" id="IL" d="M460,135 L510,130 L515,145 L520,190 L510,220 L480,230 L470,215 L460,190 L460,160 Z"><title>Illinois</title></path>
+        <path class="state" id="MS" d="M480,270 L500,270 L510,300 L510,340 L500,355 L480,350 L475,320 L470,270 Z"><title>Mississippi</title></path>
+        <path class="state" id="AL" d="M530,260 L560,260 L565,300 L560,340 L540,350 L520,340 L510,300 L500,270 Z"><title>Alabama</title></path>
+        <path class="state" id="TN" d="M480,240 L530,235 L580,230 L620,225 L615,250 L570,255 L530,260 L480,265 Z"><title>Tennessee</title></path>
+        <path class="state" id="KY" d="M510,210 L540,205 L580,200 L620,195 L630,210 L620,225 L580,230 L530,235 L510,220 Z"><title>Kentucky</title></path>
+        <path class="state" id="IN" d="M520,160 L545,155 L550,185 L545,200 L540,205 L510,210 L510,190 L515,170 Z"><title>Indiana</title></path>
+        <path class="state" id="MI" d="M530,65 L560,60 L580,70 L575,110 L560,130 L545,145 L520,140 L515,120 L520,100 L515,80 Z"><title>Michigan</title></path>
+        <path class="state" id="OH" d="M560,145 L600,140 L615,150 L620,180 L605,195 L580,200 L555,195 L550,185 L545,155 Z"><title>Ohio</title></path>
+        <path class="state" id="WV" d="M620,180 L640,175 L650,190 L640,210 L630,210 L620,195 L605,195 Z"><title>West Virginia</title></path>
+        <path class="state" id="VA" d="M620,195 L640,210 L650,190 L680,180 L720,175 L710,195 L670,210 L640,220 Z"><title>Virginia</title></path>
+        <path class="state" id="NC" d="M620,225 L640,220 L670,210 L710,195 L740,200 L755,210 L720,230 L660,240 Z"><title>North Carolina</title></path>
+        <path class="state" id="SC" d="M660,240 L690,238 L720,230 L710,260 L680,270 L660,260 Z"><title>South Carolina</title></path>
+        <path class="state" id="GA" d="M560,260 L600,250 L630,250 L660,260 L680,270 L680,310 L660,330 L620,340 L590,330 L565,300 Z"><title>Georgia</title></path>
+        <path class="state" id="PA" d="M620,140 L660,130 L720,125 L725,145 L720,160 L680,165 L640,175 L620,170 L615,150 Z"><title>Pennsylvania</title></path>
+        <path class="state" id="NY" d="M660,80 L720,70 L750,75 L760,95 L740,115 L725,125 L720,125 L660,130 L650,110 Z"><title>New York</title></path>
+        <path class="state" id="VT" d="M735,60 L742,55 L748,70 L745,85 L738,80 Z"><title>Vermont</title></path>
+        <path class="state" id="NH" d="M748,55 L755,50 L760,65 L755,80 L748,70 Z"><title>New Hampshire</title></path>
+        <path class="state" id="ME" d="M760,20 L780,15 L790,30 L785,55 L770,65 L760,65 L755,50 L755,35 Z"><title>Maine</title></path>
+        <path class="state" id="MA" d="M745,90 L770,85 L780,90 L775,95 L750,98 Z"><title>Massachusetts</title></path>
+        <path class="state" id="RI" d="M770,95 L778,93 L778,100 L772,100 Z"><title>Rhode Island</title></path>
+        <path class="state" id="CT" d="M750,100 L770,97 L772,105 L752,108 Z"><title>Connecticut</title></path>
+        <path class="state" id="NJ" d="M728,138 L738,132 L745,145 L740,158 L732,155 Z"><title>New Jersey</title></path>
+        <path class="state" id="DE" d="M720,160 L730,155 L735,168 L725,172 Z"><title>Delaware</title></path>
+        <path class="state" id="MD" d="M680,165 L720,160 L725,172 L730,180 L700,185 Z"><title>Maryland</title></path>
 
-<!-- DATA SOURCES -->
-<section class="sources">
-  <h2>Data Sources We Scan Daily</h2>
-  <div class="source-logos">
-    <div class="source-item">Volusia County Property Appraiser</div>
-    <div class="source-item">FL Sunbiz LLC Filings</div>
-    <div class="source-item">RealForeclose.com Auctions</div>
-    <div class="source-item">County Tax Collector</div>
+        <!-- FLORIDA — clickable, highlighted -->
+        <path class="state available" id="FL" d="M590,330 L620,340 L660,330 L680,310 L700,340 L710,380 L690,420 L670,445 L650,450 L640,430 L630,400 L610,370 L580,350 L570,340 Z" onclick="zoomFlorida()"><title>Florida — Click to explore counties</title></path>
+
+        <!-- Alaska & Hawaii (small insets) -->
+        <path class="state" id="AK" d="M80,380 L130,370 L160,380 L170,400 L140,420 L100,420 L70,410 Z"><title>Alaska</title></path>
+        <path class="state" id="HI" d="M230,410 L245,405 L260,410 L255,420 L240,425 L230,418 Z"><title>Hawaii</title></path>
+      </g>
+
+      <!-- Florida label -->
+      <text x="640" y="365" class="state-label available" style="font-size:13px;fill:#4CAF50;font-weight:800">FL ✦</text>
+
+      <!-- "Coming Soon" labels for nearby states -->
+      <text x="530" y="320" class="state-label" style="font-size:8px">GA</text>
+      <text x="477" y="345" class="state-label" style="font-size:8px">LA</text>
+      <text x="555" y="245" class="state-label" style="font-size:8px">TN</text>
+      <text x="380" y="365" class="state-label" style="font-size:8px">TX</text>
+    </svg>
+
+    <!-- === FLORIDA COUNTY DETAIL VIEW === -->
+    <div class="fl-detail" id="flDetail">
+      <div class="coming-soon-tag">Other counties coming Q3 2026</div>
+      <svg class="fl-map" viewBox="0 0 600 700" xmlns="http://www.w3.org/2000/svg">
+        <!-- Florida outline and counties (simplified) -->
+        <!-- Panhandle region -->
+        <path class="county" d="M30,60 L80,50 L100,55 L100,85 L70,90 L30,80 Z"><title>Escambia</title></path>
+        <path class="county" d="M80,50 L120,45 L130,55 L120,80 L100,85 L100,55 Z"><title>Santa Rosa</title></path>
+        <path class="county" d="M120,45 L160,42 L165,60 L145,80 L120,80 L130,55 Z"><title>Okaloosa</title></path>
+        <path class="county" d="M160,42 L200,38 L205,60 L185,75 L165,60 Z"><title>Walton</title></path>
+        <path class="county" d="M200,38 L230,35 L240,55 L225,70 L205,60 Z"><title>Bay</title></path>
+        <path class="county" d="M230,35 L265,33 L270,50 L250,65 L240,55 Z"><title>Gulf</title></path>
+        <path class="county" d="M100,85 L120,80 L145,80 L150,100 L140,110 L110,105 Z"><title>Holmes/Washington</title></path>
+        <path class="county" d="M145,80 L185,75 L195,95 L175,110 L150,100 Z"><title>Jackson</title></path>
+        <path class="county" d="M185,75 L225,70 L235,90 L215,105 L195,95 Z"><title>Calhoun/Liberty</title></path>
+        <path class="county" d="M225,70 L250,65 L270,50 L280,70 L275,95 L250,100 L235,90 Z"><title>Franklin/Wakulla</title></path>
+        <path class="county" d="M265,33 L310,30 L320,50 L310,70 L280,70 L270,50 Z"><title>Taylor/Jefferson</title></path>
+        <path class="county" d="M310,70 L280,70 L275,95 L300,105 L320,95 Z"><title>Leon/Gadsden</title></path>
+
+        <!-- North FL -->
+        <path class="county" d="M310,30 L370,28 L380,50 L370,70 L340,75 L320,65 Z"><title>Madison/Hamilton</title></path>
+        <path class="county" d="M370,28 L420,25 L430,50 L420,70 L380,65 L380,50 Z"><title>Suwannee/Columbia</title></path>
+        <path class="county" d="M420,25 L470,22 L480,45 L470,65 L440,70 L430,50 Z"><title>Baker/Nassau</title></path>
+        <path class="county" d="M470,22 L530,18 L540,40 L530,60 L490,60 L480,45 Z"><title>Duval</title></path>
+        <path class="county" d="M320,65 L340,75 L370,70 L380,65 L380,90 L350,100 L320,95 Z"><title>Lafayette/Dixie</title></path>
+        <path class="county" d="M380,90 L420,70 L440,70 L450,90 L440,110 L410,110 L380,105 Z"><title>Alachua/Union</title></path>
+        <path class="county" d="M440,70 L470,65 L490,60 L500,80 L490,100 L460,100 L450,90 Z"><title>Clay/St. Johns</title></path>
+
+        <!-- Central-North -->
+        <path class="county" d="M320,95 L350,100 L380,105 L375,130 L340,135 L310,125 Z"><title>Levy/Citrus</title></path>
+        <path class="county" d="M380,105 L410,110 L440,110 L445,135 L420,145 L390,140 L375,130 Z"><title>Marion/Putnam</title></path>
+        <path class="county" d="M450,90 L460,100 L490,100 L500,120 L490,140 L460,140 L445,135 L440,110 Z"><title>Flagler</title></path>
+
+        <!-- VOLUSIA COUNTY — THE HIGHLIGHTED ONE -->
+        <path class="county available" id="volusia" d="M460,140 L490,140 L510,155 L520,180 L510,210 L480,215 L455,200 L445,175 L445,155 Z" onclick="showVolusiaPopup(event)">
+          <title>Volusia County — LIVE</title>
+        </path>
+        <text class="county-label available" x="470" y="182">VOLUSIA</text>
+        <!-- Pulsing dot on Volusia -->
+        <circle cx="480" cy="175" r="5" fill="#4CAF50" opacity="0.8">
+          <animate attributeName="r" values="5;10;5" dur="2s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- Central FL -->
+        <path class="county" d="M375,130 L390,140 L420,145 L430,165 L415,185 L385,180 L360,165 L340,145 Z"><title>Lake/Sumter</title></path>
+        <path class="county" d="M420,145 L445,155 L445,175 L455,200 L440,215 L415,210 L415,185 L430,165 Z"><title>Seminole/Orange</title></path>
+        <path class="county" d="M510,210 L530,225 L530,250 L505,260 L480,250 L480,215 Z"><title>Brevard</title></path>
+        <path class="county" d="M415,210 L440,215 L455,200 L480,215 L480,250 L460,260 L440,255 L420,245 Z"><title>Osceola</title></path>
+        <path class="county" d="M340,145 L360,165 L385,180 L380,210 L355,220 L330,210 L310,185 L310,160 Z"><title>Hernando/Pasco</title></path>
+        <path class="county" d="M310,185 L330,210 L340,235 L325,260 L300,255 L290,230 L295,200 Z"><title>Hillsborough/Pinellas</title></path>
+        <path class="county" d="M330,210 L355,220 L380,210 L390,240 L375,265 L350,270 L340,255 L340,235 Z"><title>Polk</title></path>
+        <path class="county" d="M380,210 L415,210 L420,245 L410,275 L390,280 L375,265 L390,240 Z"><title>Osceola South</title></path>
+
+        <!-- South-Central -->
+        <path class="county" d="M505,260 L530,250 L540,280 L530,310 L505,310 L490,295 L480,270 Z"><title>Indian River/St. Lucie</title></path>
+        <path class="county" d="M410,275 L440,255 L460,260 L480,270 L490,295 L470,310 L440,310 L420,300 Z"><title>Okeechobee/Highlands</title></path>
+        <path class="county" d="M300,255 L325,260 L340,255 L350,270 L345,300 L320,310 L295,300 Z"><title>Sarasota/Manatee</title></path>
+        <path class="county" d="M295,300 L320,310 L345,300 L360,320 L350,350 L320,360 L295,345 Z"><title>Charlotte/Lee</title></path>
+        <path class="county" d="M350,270 L375,265 L390,280 L410,275 L420,300 L400,320 L380,330 L360,320 L345,300 Z"><title>Glades/Hendry</title></path>
+
+        <!-- South FL -->
+        <path class="county" d="M420,300 L440,310 L470,310 L490,325 L490,355 L460,365 L430,360 L400,340 L400,320 Z"><title>Martin/Palm Beach</title></path>
+        <path class="county" d="M320,360 L350,350 L380,330 L400,340 L430,360 L460,365 L460,395 L440,415 L400,420 L370,405 L340,390 Z"><title>Collier</title></path>
+        <path class="county" d="M460,365 L490,355 L510,370 L520,400 L510,430 L490,440 L470,435 L460,415 L460,395 Z"><title>Broward/Miami-Dade</title></path>
+
+        <!-- Everglades / Keys suggestion -->
+        <path class="county" d="M340,390 L370,405 L400,420 L440,415 L460,415 L470,435 L490,440 L495,460 L470,480 L440,490 L420,480 L400,460 L370,440 L345,420 Z"><title>Monroe/Keys</title></path>
+      </svg>
+
+      <!-- Volusia County Popup -->
+      <div class="county-popup" id="volusiaPopup">
+        <button class="popup-close" onclick="closePopup()">&times;</button>
+        <h3>Volusia County</h3>
+        <div class="county-state">Florida — LIVE NOW</div>
+        <div class="popup-stats">
+          <div class="popup-stat">
+            <div class="pval">142,847</div>
+            <div class="plbl">Properties</div>
+          </div>
+          <div class="popup-stat">
+            <div class="pval">23</div>
+            <div class="plbl">Hot Leads Today</div>
+          </div>
+          <div class="popup-stat">
+            <div class="pval">47</div>
+            <div class="plbl">Foreclosures</div>
+          </div>
+          <div class="popup-stat">
+            <div class="pval">67</div>
+            <div class="plbl">Avg Lead Score</div>
+          </div>
+        </div>
+        <a href="https://volusia.realcatch.io" class="popup-cta">Enter Volusia County →</a>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- HOW IT WORKS -->
 <section class="how-section">
-  <h2>How It Works</h2>
+  <h2>How RealCatch Works</h2>
+  <p>Same powerful engine, every county we cover.</p>
   <div class="how-grid">
     <div class="how-card">
-      <div class="how-num">1</div>
-      <h3>We scrape public records</h3>
-      <p>Every night, our scrapers pull fresh data from county property records, foreclosure auctions, and LLC filings.</p>
+      <div class="how-icon">📡</div>
+      <h3>Nightly public record scans</h3>
+      <p>We pull tax rolls, foreclosure dockets, LLC filings, and ownership transfers from county databases every night.</p>
     </div>
     <div class="how-card">
-      <div class="how-num">2</div>
-      <h3>AI scores every property</h3>
-      <p>8 weighted signals — tax delinquency, absentee ownership, price anomalies, foreclosure proximity — combined into a single 0–100 score.</p>
+      <div class="how-icon">🧠</div>
+      <h3>AI scoring &amp; analysis</h3>
+      <p>8 weighted signals — tax delinquency, absentee ownership, price anomalies, foreclosure proximity — scored 0–100 with GPT-generated deal summaries.</p>
     </div>
     <div class="how-card">
-      <div class="how-num">3</div>
-      <h3>You get the best leads</h3>
-      <p>Only high-scoring leads with AI-written summaries explaining exactly why each property is a deal. Daily email or dashboard.</p>
+      <div class="how-icon">📬</div>
+      <h3>Leads delivered to you</h3>
+      <p>Daily or weekly email digests with the highest-scoring leads, or browse them in your real-time dashboard. Export to CSV anytime.</p>
     </div>
   </div>
 </section>
 
-<!-- PRICING -->
-<section class="pricing" id="pricing">
-  <h2>Simple Pricing</h2>
-  <p class="subtitle">Start free. Upgrade when you're closing deals.</p>
-  <div class="price-grid">
-    <div class="price-card">
-      <h3>Basic</h3>
-      <div class="price">$19<span>/mo</span></div>
-      <ul>
-        <li>Weekly email digest</li>
-        <li>1 zip code</li>
-        <li>Lead scores + AI summaries</li>
-        <li>Email alerts</li>
-      </ul>
-      <a href="/signup?plan=basic" class="ghost">Get Started</a>
+<!-- ROADMAP -->
+<section class="roadmap" id="roadmap">
+  <h2>Coverage Roadmap</h2>
+  <div class="roadmap-grid">
+    <div class="rm-card live">
+      <span class="rm-badge rm-live">● Live</span>
+      <h4>Volusia County, FL</h4>
+      <p>142K+ properties. Full scoring, AI summaries, daily digests, foreclosure tracking.</p>
     </div>
-    <div class="price-card featured">
-      <h3>Pro</h3>
-      <div class="price">$39<span>/mo</span></div>
-      <ul>
-        <li>Daily email digest</li>
-        <li>All Volusia zip codes</li>
-        <li>Full dashboard access</li>
-        <li>CSV export</li>
-        <li>Advanced filters</li>
-      </ul>
-      <a href="/signup?plan=pro" class="primary">Start Pro Trial</a>
+    <div class="rm-card">
+      <span class="rm-badge rm-next">Next</span>
+      <h4>Orange County, FL</h4>
+      <p>Orlando metro. Target launch Q3 2026.</p>
     </div>
-    <div class="price-card">
-      <h3>Premium</h3>
-      <div class="price">$69<span>/mo</span></div>
-      <ul>
-        <li>Everything in Pro</li>
-        <li>Multi-county coverage</li>
-        <li>API access</li>
-        <li>Priority alerts</li>
-        <li>Custom scoring rules</li>
-      </ul>
-      <a href="/signup?plan=premium" class="ghost">Go Premium</a>
+    <div class="rm-card">
+      <span class="rm-badge rm-next">Next</span>
+      <h4>Duval County, FL</h4>
+      <p>Jacksonville metro. Target launch Q3 2026.</p>
+    </div>
+    <div class="rm-card">
+      <span class="rm-badge rm-soon">Q4 2026</span>
+      <h4>Hillsborough, FL</h4>
+      <p>Tampa Bay market.</p>
+    </div>
+    <div class="rm-card">
+      <span class="rm-badge rm-soon">Q4 2026</span>
+      <h4>Miami-Dade, FL</h4>
+      <p>South Florida market.</p>
+    </div>
+    <div class="rm-card">
+      <span class="rm-badge rm-future">2027</span>
+      <h4>Georgia Counties</h4>
+      <p>Expanding beyond Florida.</p>
+    </div>
+    <div class="rm-card">
+      <span class="rm-badge rm-future">2027</span>
+      <h4>Texas Counties</h4>
+      <p>Major metros first.</p>
+    </div>
+    <div class="rm-card">
+      <span class="rm-badge rm-future">2027+</span>
+      <h4>Nationwide</h4>
+      <p>Every county in America.</p>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
-<section class="cta-bottom">
-  <h2>Stop searching. Start catching.</h2>
-  <p>Other investors are already using this data. Get there first.</p>
-  <a href="/signup" class="hero-cta">Start Free — See 3 Leads Now</a>
+<!-- BETA CTA -->
+<section class="beta-section">
+  <div class="beta-card">
+    <div class="beta-live"><span class="dot"></span> Live in Volusia County</div>
+    <h2>Get in early. Get the edge.</h2>
+    <p>RealCatch is in beta — Volusia County investors are already finding deals before MLS. Sign up free and see 3 leads instantly. More counties launching soon.</p>
+    <a href="https://volusia.realcatch.io/signup" class="hero-cta">Try Volusia County Free →</a>
+  </div>
 </section>
 
 <footer class="footer">
@@ -553,33 +422,61 @@
 </footer>
 
 <script>
-function filterDemo(btn) {
-  document.querySelectorAll('.demo-filter').forEach(f => f.classList.remove('active'));
-  btn.classList.add('active');
-  const filter = btn.dataset.filter;
-  const rows = document.querySelectorAll('#demoLeads tr');
-  let visible = 0;
-  rows.forEach(row => {
-    const type = row.dataset.type;
-    const score = parseInt(row.dataset.score);
-    let show = filter === 'all' || (filter === 'score70' ? score >= 70 : type === filter);
-    row.classList.toggle('hidden-row', !show);
-    if (show) visible++;
-  });
-  const sl = document.getElementById('statLabel');
-  const sv = document.getElementById('statVal');
-  const sc = document.getElementById('statChange');
-  if (filter === 'all') {
-    sl.textContent = 'Hot Leads Today';
-    sv.textContent = '23';
-    sc.textContent = '↑ 8 from yesterday';
-  } else {
-    sl.textContent = btn.textContent.trim() + ' Leads';
-    sv.textContent = visible;
-    sc.textContent = 'Showing ' + visible + ' of 23 total';
-  }
-  document.getElementById('noResults').style.display = visible === 0 ? 'block' : 'none';
+const usaMap = document.getElementById('usaMap');
+const flDetail = document.getElementById('flDetail');
+const btnUSA = document.getElementById('btnUSA');
+const btnFL = document.getElementById('btnFL');
+const breadcrumb = document.getElementById('breadcrumb');
+
+function showUSA() {
+  usaMap.style.display = '';
+  usaMap.style.opacity = '1';
+  flDetail.classList.remove('visible');
+  btnUSA.classList.add('active');
+  btnFL.classList.remove('active');
+  breadcrumb.innerHTML = '<span class="current">United States</span>';
+  closePopup();
 }
+
+function zoomFlorida() {
+  usaMap.style.opacity = '0';
+  setTimeout(() => {
+    usaMap.style.display = 'none';
+    flDetail.classList.add('visible');
+  }, 300);
+  btnFL.classList.add('active');
+  btnUSA.classList.remove('active');
+  breadcrumb.innerHTML = '<span onclick="showUSA()">United States</span><span class="sep">›</span><span class="current">Florida</span>';
+}
+
+function showVolusiaPopup(e) {
+  const popup = document.getElementById('volusiaPopup');
+  const container = document.getElementById('mapContainer');
+  const rect = container.getBoundingClientRect();
+
+  // Position popup near the click but keep it on screen
+  let left = Math.min(e.clientX - rect.left + 20, rect.width - 340);
+  let top = Math.min(e.clientY - rect.top - 60, rect.height - 300);
+  if (left < 10) left = 10;
+  if (top < 10) top = 10;
+
+  popup.style.left = left + 'px';
+  popup.style.top = top + 'px';
+  popup.classList.add('visible');
+}
+
+function closePopup() {
+  document.getElementById('volusiaPopup').classList.remove('visible');
+}
+
+// Click outside popup to close
+document.addEventListener('click', function(e) {
+  const popup = document.getElementById('volusiaPopup');
+  if (popup.classList.contains('visible') && !popup.contains(e.target) && e.target.id !== 'volusia') {
+    closePopup();
+  }
+});
 </script>
+
 </body>
 </html>

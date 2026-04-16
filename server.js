@@ -54,6 +54,11 @@ app.use('/api', apiRoutes);
 
 // Page routes
 app.get('/', (req, res) => {
+  const host = req.hostname || '';
+  // volusia.realcatch.io or volusia.localhost → Volusia-specific landing
+  if (host.startsWith('volusia.') || host.startsWith('volusia-')) {
+    return res.render('volusia-landing');
+  }
   res.render('landing');
 });
 

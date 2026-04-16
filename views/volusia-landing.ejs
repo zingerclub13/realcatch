@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RealCatch — AI-Powered Real Estate Lead Intelligence</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1a1a2e; line-height: 1.6; background: #0d0d1a; }
+
+    .nav { display: flex; justify-content: space-between; align-items: center; padding: 18px 40px; max-width: 1300px; margin: 0 auto; }
+    .nav-logo { font-size: 26px; font-weight: 800; color: white; text-decoration: none; letter-spacing: -0.5px; }
+    .nav-logo span { color: #4CAF50; }
+    .nav-links { display: flex; align-items: center; gap: 25px; }
+    .nav-links a { text-decoration: none; color: rgba(255,255,255,0.7); font-weight: 500; font-size: 15px; }
+    .nav-links a.btn { background: #4CAF50; color: white; padding: 10px 22px; border-radius: 6px; font-weight: 600; }
+
+    /* ---- HERO ---- */
+    .hero { text-align: center; padding: 70px 20px 30px; background: linear-gradient(180deg, #0d0d1a 0%, #111128 100%); color: white; }
+    .hero-badge { display: inline-block; background: rgba(76,175,80,0.15); color: #4CAF50; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 20px; border: 1px solid rgba(76,175,80,0.3); }
+    .hero h1 { font-size: 52px; max-width: 800px; margin: 0 auto 20px; line-height: 1.1; font-weight: 800; letter-spacing: -1px; }
+    .hero h1 em { font-style: normal; color: #4CAF50; }
+    .hero p { font-size: 19px; opacity: 0.7; max-width: 600px; margin: 0 auto 35px; }
+    .hero-buttons { display: flex; gap: 15px; justify-content: center; margin-bottom: 15px; }
+    .hero-cta { display: inline-block; background: #4CAF50; color: white; padding: 15px 36px; border-radius: 8px; font-size: 17px; font-weight: 700; text-decoration: none; transition: all 0.2s; }
+    .hero-cta:hover { background: #43a047; transform: translateY(-1px); }
+    .hero-cta-ghost { display: inline-block; border: 1px solid rgba(255,255,255,0.25); color: white; padding: 15px 36px; border-radius: 8px; font-size: 17px; font-weight: 600; text-decoration: none; }
+    .hero-sub { font-size: 13px; opacity: 0.4; margin-top: 10px; }
+
+    /* ---- SOCIAL PROOF / IMAGE SECTION ---- */
+    .proof-section { padding: 60px 20px; background: #111128; overflow: hidden; }
+    .proof-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; max-width: 1100px; margin: 0 auto; align-items: center; }
+    .proof-img { border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.5); position: relative; }
+    .proof-img img { width: 100%; height: 340px; object-fit: cover; display: block; }
+    .proof-img-badge { position: absolute; bottom: 16px; left: 16px; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); padding: 10px 16px; border-radius: 10px; color: white; font-size: 13px; font-weight: 600; border: 1px solid rgba(255,255,255,0.1); }
+    .proof-img-badge span { color: #4CAF50; font-size: 18px; font-weight: 800; display: block; }
+    .proof-text h2 { color: white; font-size: 32px; font-weight: 800; line-height: 1.2; margin-bottom: 18px; }
+    .proof-text h2 em { font-style: normal; color: #4CAF50; }
+    .proof-text p { color: rgba(255,255,255,0.5); font-size: 16px; line-height: 1.7; margin-bottom: 25px; }
+    .proof-stats { display: flex; gap: 35px; }
+    .proof-stat-item .proof-num { font-size: 36px; font-weight: 800; color: #4CAF50; }
+    .proof-stat-item .proof-lbl { font-size: 12px; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 1px; }
+    @media (max-width: 768px) { .proof-grid { grid-template-columns: 1fr; } .proof-img img { height: 220px; } }
+
+    /* ---- LIVE DEMO SECTION ---- */
+    .demo-section { padding: 40px 20px 80px; background: linear-gradient(180deg, #111128 0%, #0d0d1a 100%); }
+    .demo-section h2 { text-align: center; color: white; font-size: 15px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.4; margin-bottom: 30px; }
+
+    .demo-wrapper { max-width: 1150px; margin: 0 auto; background: #1a1a2e; border-radius: 16px; border: 1px solid rgba(255,255,255,0.08); overflow: hidden; box-shadow: 0 25px 80px rgba(0,0,0,0.5); }
+
+    .demo-topbar { background: #12122a; padding: 14px 25px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .demo-topbar-left { display: flex; align-items: center; gap: 12px; }
+    .demo-dots { display: flex; gap: 6px; }
+    .demo-dots span { width: 12px; height: 12px; border-radius: 50%; }
+    .demo-dots span:nth-child(1) { background: #ff5f57; }
+    .demo-dots span:nth-child(2) { background: #ffbd2e; }
+    .demo-dots span:nth-child(3) { background: #28c840; }
+    .demo-url { background: rgba(255,255,255,0.06); padding: 6px 16px; border-radius: 6px; font-size: 12px; color: rgba(255,255,255,0.4); font-family: monospace; }
+    .demo-topbar-right { display: flex; gap: 10px; align-items: center; }
+    .demo-tier { background: #4CAF50; padding: 3px 10px; border-radius: 10px; font-size: 11px; font-weight: 700; color: white; text-transform: uppercase; }
+    .demo-user { color: rgba(255,255,255,0.4); font-size: 12px; }
+
+    .demo-body { padding: 25px; }
+
+    /* Stats row */
+    .demo-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px; }
+    .demo-stat { background: rgba(255,255,255,0.04); padding: 18px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.06); }
+    .demo-stat .label { color: rgba(255,255,255,0.35); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+    .demo-stat .val { font-size: 32px; font-weight: 800; color: white; margin-top: 4px; }
+    .demo-stat .val.green { color: #4CAF50; }
+    .demo-stat .val.red { color: #ff5252; }
+    .demo-stat .val.amber { color: #ffab00; }
+    .demo-stat .change { font-size: 11px; color: #4CAF50; margin-top: 4px; }
+
+    /* Filters */
+    .demo-filters { display: flex; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; }
+    .demo-filter { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); padding: 8px 14px; border-radius: 6px; color: rgba(255,255,255,0.5); font-size: 13px; cursor: pointer; transition: all 0.2s; user-select: none; }
+    .demo-filter:hover { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.8); }
+    .demo-filter.active { background: rgba(76,175,80,0.12); border-color: rgba(76,175,80,0.3); color: #4CAF50; }
+
+    /* Lead table */
+    .demo-table { width: 100%; border-collapse: collapse; }
+    .demo-table th { text-align: left; padding: 10px 14px; color: rgba(255,255,255,0.3); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid rgba(255,255,255,0.06); font-weight: 600; }
+    .demo-table td { padding: 14px; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: top; }
+    .demo-table tr { transition: all 0.25s ease; }
+    .demo-table tr:hover { background: rgba(255,255,255,0.02); }
+    .demo-table tr.hidden-row { display: none; }
+
+    .score-badge { display: inline-block; padding: 5px 14px; border-radius: 20px; font-weight: 800; color: white; font-size: 15px; min-width: 50px; text-align: center; }
+    .score-hot { background: linear-gradient(135deg, #ff1744, #d50000); box-shadow: 0 2px 12px rgba(255,23,68,0.3); }
+    .score-warm { background: linear-gradient(135deg, #ff9100, #ff6d00); box-shadow: 0 2px 12px rgba(255,145,0,0.3); }
+    .score-cool { background: linear-gradient(135deg, #4CAF50, #2e7d32); box-shadow: 0 2px 12px rgba(76,175,80,0.3); }
+
+    .lead-type { display: inline-block; padding: 3px 10px; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+    .lt-foreclosure { background: rgba(255,23,68,0.12); color: #ff5252; }
+    .lt-tax { background: rgba(255,145,0,0.12); color: #ffab00; }
+    .lt-absentee { background: rgba(33,150,243,0.12); color: #42a5f5; }
+    .lt-undervalued { background: rgba(156,39,176,0.12); color: #ba68c8; }
+
+    .addr { color: white; font-weight: 600; font-size: 14px; }
+    .addr-sub { color: rgba(255,255,255,0.35); font-size: 12px; margin-top: 2px; }
+    .owner { color: rgba(255,255,255,0.6); font-size: 13px; }
+    .owner-flag { color: #42a5f5; font-size: 11px; }
+    .value { color: rgba(255,255,255,0.7); font-size: 14px; font-weight: 600; }
+    .summary { color: rgba(255,255,255,0.45); font-size: 12px; line-height: 1.5; max-width: 280px; }
+    .ai-tag { display: inline-block; background: rgba(76,175,80,0.1); color: #4CAF50; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 3px; margin-bottom: 4px; letter-spacing: 0.5px; }
+
+    .signals-row { display: flex; gap: 5px; margin-top: 6px; flex-wrap: wrap; }
+    .signal-pill { display: inline-block; background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.4); padding: 2px 8px; border-radius: 3px; font-size: 10px; }
+
+    /* Blurred overlay for locked leads */
+    .locked-row td { position: relative; }
+    .locked-row .addr, .locked-row .owner, .locked-row .value, .locked-row .summary { filter: blur(5px); user-select: none; }
+    .unlock-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2; text-align: center; }
+    .unlock-btn { background: #4CAF50; color: white; border: none; padding: 8px 18px; border-radius: 6px; font-weight: 700; font-size: 12px; cursor: pointer; white-space: nowrap; }
+
+    /* ---- EMAIL PREVIEW ---- */
+    .email-demo-section { padding: 80px 20px; background: #0d0d1a; }
+    .email-demo-section > h2 { text-align: center; color: white; font-size: 36px; margin-bottom: 15px; }
+    .email-demo-section > p { text-align: center; color: rgba(255,255,255,0.5); margin-bottom: 40px; font-size: 17px; }
+
+    .email-preview { max-width: 620px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+    .email-header { background: #1a1a2e; color: white; padding: 22px 28px; }
+    .email-header h3 { margin: 0 0 3px; font-size: 20px; }
+    .email-header p { margin: 0; opacity: 0.6; font-size: 13px; }
+    .email-body { padding: 25px 28px; }
+    .email-lead { display: flex; justify-content: space-between; align-items: flex-start; padding: 16px 0; border-bottom: 1px solid #f0f0f0; }
+    .email-lead:last-child { border: none; }
+    .email-lead-info h4 { font-size: 15px; margin-bottom: 3px; color: #1a1a2e; }
+    .email-lead-info p { font-size: 13px; color: #666; margin: 0; }
+    .email-lead-score { text-align: center; flex-shrink: 0; margin-left: 15px; }
+    .email-lead-score .num { font-size: 28px; font-weight: 800; }
+    .email-lead-score .num.hot { color: #e53935; }
+    .email-lead-score .num.warm { color: #ff9800; }
+    .email-lead-score .lbl { font-size: 10px; color: #999; text-transform: uppercase; letter-spacing: 1px; }
+    .email-cta { display: block; text-align: center; background: #4CAF50; color: white; padding: 14px; border-radius: 8px; text-decoration: none; font-weight: 700; margin-top: 15px; font-size: 15px; }
+
+    /* ---- HOW IT WORKS ---- */
+    .how-section { padding: 80px 20px; background: #111128; }
+    .how-section h2 { text-align: center; color: white; font-size: 36px; margin-bottom: 60px; }
+    .how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1000px; margin: 0 auto; }
+    .how-card { text-align: center; padding: 35px 25px; background: rgba(255,255,255,0.03); border-radius: 14px; border: 1px solid rgba(255,255,255,0.06); }
+    .how-num { width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #4CAF50, #2e7d32); color: white; font-size: 22px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+    .how-card h3 { color: white; margin-bottom: 10px; font-size: 18px; }
+    .how-card p { color: rgba(255,255,255,0.45); font-size: 14px; }
+
+    /* ---- DATA SOURCES ---- */
+    .sources { padding: 60px 20px; background: #0d0d1a; text-align: center; }
+    .sources h2 { color: white; font-size: 15px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.3; margin-bottom: 25px; }
+    .source-logos { display: flex; justify-content: center; gap: 50px; flex-wrap: wrap; align-items: center; }
+    .source-item { color: rgba(255,255,255,0.2); font-size: 14px; font-weight: 600; padding: 12px 20px; border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; }
+
+    /* ---- PRICING ---- */
+    .pricing { padding: 80px 20px; background: #111128; }
+    .pricing h2 { text-align: center; color: white; font-size: 36px; margin-bottom: 15px; }
+    .pricing .subtitle { text-align: center; color: rgba(255,255,255,0.4); margin-bottom: 50px; font-size: 16px; }
+    .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 950px; margin: 0 auto; }
+    .price-card { background: rgba(255,255,255,0.03); padding: 35px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.06); position: relative; }
+    .price-card.featured { border-color: #4CAF50; background: rgba(76,175,80,0.06); }
+    .price-card.featured::before { content: 'MOST POPULAR'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #4CAF50; color: white; font-size: 10px; font-weight: 800; padding: 4px 14px; border-radius: 10px; letter-spacing: 1px; }
+    .price-card h3 { font-size: 20px; color: white; margin-bottom: 5px; }
+    .price-card .price { font-size: 44px; font-weight: 800; color: white; margin: 15px 0; }
+    .price-card .price span { font-size: 16px; opacity: 0.4; font-weight: 400; }
+    .price-card ul { list-style: none; margin: 20px 0 30px; }
+    .price-card li { padding: 7px 0; font-size: 14px; color: rgba(255,255,255,0.6); }
+    .price-card li::before { content: '✓ '; color: #4CAF50; font-weight: bold; }
+    .price-card a { display: block; text-align: center; padding: 14px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 15px; }
+    .price-card a.primary { background: #4CAF50; color: white; }
+    .price-card a.ghost { border: 1px solid rgba(255,255,255,0.15); color: white; }
+
+    /* ---- CTA ---- */
+    .cta-bottom { text-align: center; padding: 80px 20px; background: #0d0d1a; }
+    .cta-bottom h2 { font-size: 40px; color: white; margin-bottom: 15px; }
+    .cta-bottom p { color: rgba(255,255,255,0.45); margin-bottom: 30px; font-size: 18px; }
+
+    .footer { text-align: center; padding: 30px; color: rgba(255,255,255,0.2); font-size: 13px; background: #0d0d1a; border-top: 1px solid rgba(255,255,255,0.05); }
+
+    @media (max-width: 900px) {
+      .demo-stats { grid-template-columns: repeat(2, 1fr); }
+      .price-grid, .how-grid { grid-template-columns: 1fr; max-width: 400px; }
+    }
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 34px; }
+      .nav { padding: 15px 20px; }
+      .nav-links { gap: 12px; }
+      .nav-links a { font-size: 13px; }
+      .hero-buttons { flex-direction: column; align-items: center; }
+      .demo-stats { grid-template-columns: 1fr 1fr; }
+      .demo-table { font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-logo">Real<span>Catch</span></a>
+  <div class="nav-links">
+    <a href="#demo">Demo</a>
+    <a href="#pricing">Pricing</a>
+    <a href="/login">Log In</a>
+    <a href="/signup" class="btn">Start Free</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">Scanning 142,000+ Volusia County properties daily</div>
+  <h1>Find <em>motivated sellers</em><br>before your competition</h1>
+  <p>AI scans tax records, foreclosure auctions, and ownership changes every night — then scores and ranks the best deals for you by morning.</p>
+  <div class="hero-buttons">
+    <a href="/signup" class="hero-cta">Start Free — See 3 Leads Now</a>
+    <a href="#demo" class="hero-cta-ghost">See Live Demo ↓</a>
+  </div>
+  <p class="hero-sub">No credit card required</p>
+</section>
+
+<!-- SOCIAL PROOF IMAGE SECTION -->
+<section class="proof-section">
+  <div class="proof-grid">
+    <div class="proof-img">
+      <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80" alt="Real estate deal - keys to a new property" loading="lazy">
+      <div class="proof-img-badge"><span>$2.4M+</span>Deal value found this month</div>
+    </div>
+    <div class="proof-text">
+      <h2>Investors are closing deals <em>days</em> before others even know about them</h2>
+      <p>While other investors wait for MLS listings, RealCatch users are already reaching out to motivated sellers with tax delinquencies, pending foreclosures, and distressed ownership situations — all sourced from public records before they hit the market.</p>
+      <div class="proof-stats">
+        <div class="proof-stat-item">
+          <div class="proof-num">142K</div>
+          <div class="proof-lbl">Properties Monitored</div>
+        </div>
+        <div class="proof-stat-item">
+          <div class="proof-num">23</div>
+          <div class="proof-lbl">Hot Leads Today</div>
+        </div>
+        <div class="proof-stat-item">
+          <div class="proof-num">8</div>
+          <div class="proof-lbl">Data Sources</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIVE DEMO DASHBOARD -->
+<section class="demo-section" id="demo">
+  <h2>Live product preview</h2>
+  <div class="demo-wrapper">
+    <div class="demo-topbar">
+      <div class="demo-topbar-left">
+        <div class="demo-dots"><span></span><span></span><span></span></div>
+        <div class="demo-url">realcatch.io/dashboard</div>
+      </div>
+      <div class="demo-topbar-right">
+        <span class="demo-tier">PRO</span>
+        <span class="demo-user">investor@example.com</span>
+      </div>
+    </div>
+    <div class="demo-body">
+      <!-- Stats -->
+      <div class="demo-stats">
+        <div class="demo-stat">
+          <div class="label" id="statLabel">Hot Leads Today</div>
+          <div class="val red" id="statVal">23</div>
+          <div class="change" id="statChange">↑ 8 from yesterday</div>
+        </div>
+        <div class="demo-stat">
+          <div class="label">Avg Lead Score</div>
+          <div class="val green">67</div>
+          <div class="change">↑ 4 pts this week</div>
+        </div>
+        <div class="demo-stat">
+          <div class="label">Properties Tracked</div>
+          <div class="val" style="color:white">142,847</div>
+          <div class="change">↑ 312 new this week</div>
+        </div>
+        <div class="demo-stat">
+          <div class="label">Foreclosure Auctions</div>
+          <div class="val amber">47</div>
+          <div class="change">Next 30 days</div>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="demo-filters">
+        <div class="demo-filter active" data-filter="all" onclick="filterDemo(this)">All Types</div>
+        <div class="demo-filter" data-filter="foreclosure" onclick="filterDemo(this)">Foreclosure</div>
+        <div class="demo-filter" data-filter="tax" onclick="filterDemo(this)">Tax Delinquent</div>
+        <div class="demo-filter" data-filter="absentee" onclick="filterDemo(this)">Absentee Owner</div>
+        <div class="demo-filter" data-filter="undervalued" onclick="filterDemo(this)">Undervalued</div>
+        <div class="demo-filter" data-filter="score70" onclick="filterDemo(this)">Score 70+</div>
+      </div>
+
+      <!-- Leads table -->
+      <table class="demo-table">
+        <thead>
+          <tr>
+            <th>Score</th>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Owner</th>
+            <th>Value</th>
+            <th>AI Analysis</th>
+          </tr>
+        </thead>
+        <tbody id="demoLeads">
+          <tr data-type="foreclosure" data-score="92">
+            <td><span class="score-badge score-hot">92</span></td>
+            <td>
+              <div class="addr">1847 S Ridgewood Ave</div>
+              <div class="addr-sub">Daytona Beach, FL 32119</div>
+              <div class="signals-row">
+                <span class="signal-pill">Tax Delinquent 3yr</span>
+                <span class="signal-pill">Foreclosure</span>
+              </div>
+            </td>
+            <td><span class="lead-type lt-foreclosure">Foreclosure</span></td>
+            <td>
+              <div class="owner">GARCIA MARTINEZ LUIS</div>
+              <div class="owner-flag">📍 New York, NY</div>
+            </td>
+            <td><div class="value">$187,500</div></td>
+            <td>
+              <div class="ai-tag">AI SUMMARY</div>
+              <div class="summary">3-year tax delinquent headed to foreclosure auction May 2. Absentee owner in NY — assessed at $187K but last sold for $95K in 2019. Highly motivated.</div>
+            </td>
+          </tr>
+          <tr data-type="tax" data-score="85">
+            <td><span class="score-badge score-hot">85</span></td>
+            <td>
+              <div class="addr">443 Beville Rd Unit 12</div>
+              <div class="addr-sub">South Daytona, FL 32119</div>
+              <div class="signals-row">
+                <span class="signal-pill">Tax Delinquent</span>
+                <span class="signal-pill">Non-Homestead</span>
+                <span class="signal-pill">LLC</span>
+              </div>
+            </td>
+            <td><span class="lead-type lt-tax">Tax Delinq.</span></td>
+            <td>
+              <div class="owner">SUNSHINE RENTALS LLC</div>
+              <div class="owner-flag">📍 Atlanta, GA</div>
+            </td>
+            <td><div class="value">$142,000</div></td>
+            <td>
+              <div class="ai-tag">AI SUMMARY</div>
+              <div class="summary">Out-of-state LLC owner with $4,200 in delinquent taxes. Non-homestead condo likely a neglected rental. Good candidate for off-market acquisition.</div>
+            </td>
+          </tr>
+          <tr data-type="absentee" data-score="71">
+            <td><span class="score-badge score-warm">71</span></td>
+            <td>
+              <div class="addr">2200 S Atlantic Ave #1604</div>
+              <div class="addr-sub">Daytona Beach Shores, FL 32118</div>
+              <div class="signals-row">
+                <span class="signal-pill">Absentee Owner</span>
+                <span class="signal-pill">Price Anomaly</span>
+              </div>
+            </td>
+            <td><span class="lead-type lt-absentee">Absentee</span></td>
+            <td>
+              <div class="owner">THORNTON ROBERT & MARY</div>
+              <div class="owner-flag">📍 Chicago, IL</div>
+            </td>
+            <td><div class="value">$310,000</div></td>
+            <td>
+              <div class="ai-tag">AI SUMMARY</div>
+              <div class="summary">Oceanfront condo assessed at $310K but sold for $195K last year — 37% below value. Elderly out-of-state owners, likely estate planning situation.</div>
+            </td>
+          </tr>
+          <tr data-type="undervalued" data-score="64">
+            <td><span class="score-badge score-warm">64</span></td>
+            <td>
+              <div class="addr">1050 N Nova Rd</div>
+              <div class="addr-sub">Holly Hill, FL 32117</div>
+              <div class="signals-row">
+                <span class="signal-pill">Recent Sale</span>
+                <span class="signal-pill">Undervalued</span>
+              </div>
+            </td>
+            <td><span class="lead-type lt-undervalued">Undervalued</span></td>
+            <td>
+              <div class="owner">QUICK FLIP PROPERTIES INC</div>
+              <div class="owner-flag">📍 Orlando, FL</div>
+            </td>
+            <td><div class="value">$225,000</div></td>
+            <td>
+              <div class="ai-tag">AI SUMMARY</div>
+              <div class="summary">Sold 3 weeks ago for $148K — well below $225K assessed. Name suggests wholesale flip. Watch for relisting at higher price within 60 days.</div>
+            </td>
+          </tr>
+          <!-- Locked rows to show the paywall -->
+          <tr class="locked-row" data-type="tax" data-score="61">
+            <td><span class="score-badge score-warm">61</span></td>
+            <td style="position:relative">
+              <div class="addr">785 Derbyshire Rd</div>
+              <div class="addr-sub">Daytona Beach, FL 32117</div>
+              <span class="unlock-overlay"><button class="unlock-btn" onclick="window.location='/signup'">Sign up to unlock all leads →</button></span>
+            </td>
+            <td><span class="lead-type lt-tax">Tax Delinq.</span></td>
+            <td><div class="owner">WILLIAMS JAMES R</div></td>
+            <td><div class="value">$165,000</div></td>
+            <td><div class="summary">Tax delinquent for 2 years with non-homestead status. Owner address is local but property appears vacant based on...</div></td>
+          </tr>
+          <tr class="locked-row" data-type="absentee" data-score="55">
+            <td><span class="score-badge score-cool">55</span></td>
+            <td>
+              <div class="addr">920 Mason Ave</div>
+              <div class="addr-sub">Daytona Beach, FL 32117</div>
+            </td>
+            <td><span class="lead-type lt-absentee">Absentee</span></td>
+            <td><div class="owner">PATEL HOLDINGS LLC</div></td>
+            <td><div class="value">$198,000</div></td>
+            <td><div class="summary">Out-of-state LLC owner based in New Jersey. Property is a vacant lot in a neighborhood with recent development...</div></td>
+          </tr>
+        </tbody>
+      </table>
+      <div id="noResults" style="text-align:center;padding:40px;color:rgba(255,255,255,0.3);display:none">No leads match this filter. Try "All Types" to see everything.</div>
+    </div>
+  </div>
+</section>
+
+<!-- EMAIL PREVIEW -->
+<section class="email-demo-section">
+  <h2>Leads delivered to your inbox</h2>
+  <p>Get a daily or weekly digest — here's what it looks like</p>
+  <div class="email-preview">
+    <div class="email-header">
+      <h3>RealCatch Daily Intel — 23 New Leads</h3>
+      <p>Wednesday, April 16 2026 • Volusia County, FL</p>
+    </div>
+    <div class="email-body">
+      <div class="email-lead">
+        <div class="email-lead-info">
+          <h4>1847 S Ridgewood Ave, Daytona Beach 32119</h4>
+          <p>Foreclosure auction May 2 — 3yr tax delinquent, absentee owner in NY. Assessed $187K, last sold $95K.</p>
+        </div>
+        <div class="email-lead-score">
+          <div class="num hot">92</div>
+          <div class="lbl">Score</div>
+        </div>
+      </div>
+      <div class="email-lead">
+        <div class="email-lead-info">
+          <h4>443 Beville Rd Unit 12, South Daytona 32119</h4>
+          <p>LLC owner in Atlanta, $4.2K delinquent taxes. Non-homestead condo, likely neglected rental.</p>
+        </div>
+        <div class="email-lead-score">
+          <div class="num warm">85</div>
+          <div class="lbl">Score</div>
+        </div>
+      </div>
+      <div class="email-lead">
+        <div class="email-lead-info">
+          <h4>2200 S Atlantic Ave #1604, DB Shores 32118</h4>
+          <p>Oceanfront condo sold 37% below assessed value. Out-of-state elderly owners — possible estate sale.</p>
+        </div>
+        <div class="email-lead-score">
+          <div class="num warm">71</div>
+          <div class="lbl">Score</div>
+        </div>
+      </div>
+      <a href="/signup" class="email-cta">View All 23 Leads →</a>
+    </div>
+  </div>
+</section>
+
+<!-- DATA SOURCES -->
+<section class="sources">
+  <h2>Data Sources We Scan Daily</h2>
+  <div class="source-logos">
+    <div class="source-item">Volusia County Property Appraiser</div>
+    <div class="source-item">FL Sunbiz LLC Filings</div>
+    <div class="source-item">RealForeclose.com Auctions</div>
+    <div class="source-item">County Tax Collector</div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section">
+  <h2>How It Works</h2>
+  <div class="how-grid">
+    <div class="how-card">
+      <div class="how-num">1</div>
+      <h3>We scrape public records</h3>
+      <p>Every night, our scrapers pull fresh data from county property records, foreclosure auctions, and LLC filings.</p>
+    </div>
+    <div class="how-card">
+      <div class="how-num">2</div>
+      <h3>AI scores every property</h3>
+      <p>8 weighted signals — tax delinquency, absentee ownership, price anomalies, foreclosure proximity — combined into a single 0–100 score.</p>
+    </div>
+    <div class="how-card">
+      <div class="how-num">3</div>
+      <h3>You get the best leads</h3>
+      <p>Only high-scoring leads with AI-written summaries explaining exactly why each property is a deal. Daily email or dashboard.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <h2>Simple Pricing</h2>
+  <p class="subtitle">Start free. Upgrade when you're closing deals.</p>
+  <div class="price-grid">
+    <div class="price-card">
+      <h3>Basic</h3>
+      <div class="price">$19<span>/mo</span></div>
+      <ul>
+        <li>Weekly email digest</li>
+        <li>1 zip code</li>
+        <li>Lead scores + AI summaries</li>
+        <li>Email alerts</li>
+      </ul>
+      <a href="/signup?plan=basic" class="ghost">Get Started</a>
+    </div>
+    <div class="price-card featured">
+      <h3>Pro</h3>
+      <div class="price">$39<span>/mo</span></div>
+      <ul>
+        <li>Daily email digest</li>
+        <li>All Volusia zip codes</li>
+        <li>Full dashboard access</li>
+        <li>CSV export</li>
+        <li>Advanced filters</li>
+      </ul>
+      <a href="/signup?plan=pro" class="primary">Start Pro Trial</a>
+    </div>
+    <div class="price-card">
+      <h3>Premium</h3>
+      <div class="price">$69<span>/mo</span></div>
+      <ul>
+        <li>Everything in Pro</li>
+        <li>Multi-county coverage</li>
+        <li>API access</li>
+        <li>Priority alerts</li>
+        <li>Custom scoring rules</li>
+      </ul>
+      <a href="/signup?plan=premium" class="ghost">Go Premium</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-bottom">
+  <h2>Stop searching. Start catching.</h2>
+  <p>Other investors are already using this data. Get there first.</p>
+  <a href="/signup" class="hero-cta">Start Free — See 3 Leads Now</a>
+</section>
+
+<footer class="footer">
+  &copy; 2026 RealCatch.io — AI-powered real estate intelligence. All data sourced from public records.
+</footer>
+
+<script>
+function filterDemo(btn) {
+  document.querySelectorAll('.demo-filter').forEach(f => f.classList.remove('active'));
+  btn.classList.add('active');
+  const filter = btn.dataset.filter;
+  const rows = document.querySelectorAll('#demoLeads tr');
+  let visible = 0;
+  rows.forEach(row => {
+    const type = row.dataset.type;
+    const score = parseInt(row.dataset.score);
+    let show = filter === 'all' || (filter === 'score70' ? score >= 70 : type === filter);
+    row.classList.toggle('hidden-row', !show);
+    if (show) visible++;
+  });
+  const sl = document.getElementById('statLabel');
+  const sv = document.getElementById('statVal');
+  const sc = document.getElementById('statChange');
+  if (filter === 'all') {
+    sl.textContent = 'Hot Leads Today';
+    sv.textContent = '23';
+    sc.textContent = '↑ 8 from yesterday';
+  } else {
+    sl.textContent = btn.textContent.trim() + ' Leads';
+    sv.textContent = visible;
+    sc.textContent = 'Showing ' + visible + ' of 23 total';
+  }
+  document.getElementById('noResults').style.display = visible === 0 ? 'block' : 'none';
+}
+</script>
+</body>
+</html>
