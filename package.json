@@ -1,0 +1,36 @@
+{
+  "name": "realcatch",
+  "version": "1.0.0",
+  "description": "Self-prospecting public data intelligence engine for FL real estate",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "scrape:vcpa": "node src/scrapers/vcpa.js",
+    "scrape:sunbiz": "node src/scrapers/sunbiz.js",
+    "scrape:foreclosure": "node src/scrapers/foreclosure.js",
+    "score": "node src/scoring/engine.js",
+    "prospect": "node src/prospector/finder.js",
+    "db:init": "node src/db/init.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "axios": "^1.15.0",
+    "cheerio": "^1.2.0",
+    "cookie-parser": "^1.4.7",
+    "csv-parse": "^6.2.1",
+    "dotenv": "^17.4.2",
+    "ejs": "^5.0.2",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "form-data": "^4.0.5",
+    "helmet": "^8.1.0",
+    "mailgun.js": "^13.0.0",
+    "node-cron": "^4.2.1",
+    "openai": "^6.34.0",
+    "pg": "^8.20.0",
+    "stripe": "^22.0.2"
+  }
+}

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RealCatch — AI-Powered Real Estate Lead Intelligence</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1a1a2e; line-height: 1.6; }
+
+    .nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; max-width: 1200px; margin: 0 auto; }
+    .nav-logo { font-size: 24px; font-weight: 800; color: #1a1a2e; text-decoration: none; }
+    .nav-logo span { color: #4CAF50; }
+    .nav-links a { margin-left: 30px; text-decoration: none; color: #555; font-weight: 500; }
+    .nav-links a.btn { background: #4CAF50; color: white; padding: 10px 24px; border-radius: 6px; }
+
+    .hero { text-align: center; padding: 80px 20px 60px; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: white; }
+    .hero h1 { font-size: 48px; max-width: 700px; margin: 0 auto 20px; line-height: 1.15; }
+    .hero h1 span { color: #4CAF50; }
+    .hero p { font-size: 20px; opacity: 0.85; max-width: 600px; margin: 0 auto 40px; }
+    .hero-cta { display: inline-block; background: #4CAF50; color: white; padding: 16px 40px; border-radius: 8px; font-size: 18px; font-weight: 700; text-decoration: none; transition: transform 0.2s; }
+    .hero-cta:hover { transform: translateY(-2px); }
+    .hero-sub { margin-top: 15px; font-size: 14px; opacity: 0.6; }
+
+    .signals { padding: 80px 20px; background: #f8f9fa; }
+    .signals h2 { text-align: center; font-size: 36px; margin-bottom: 50px; }
+    .signal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; max-width: 1000px; margin: 0 auto; }
+    .signal-card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
+    .signal-card .icon { font-size: 32px; margin-bottom: 15px; }
+    .signal-card h3 { margin-bottom: 10px; }
+    .signal-card p { color: #666; font-size: 14px; }
+
+    .how-it-works { padding: 80px 20px; max-width: 900px; margin: 0 auto; }
+    .how-it-works h2 { text-align: center; font-size: 36px; margin-bottom: 50px; }
+    .step { display: flex; align-items: flex-start; margin-bottom: 40px; }
+    .step-num { background: #4CAF50; color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 700; flex-shrink: 0; margin-right: 25px; }
+    .step h3 { margin-bottom: 8px; }
+    .step p { color: #666; }
+
+    .pricing { padding: 80px 20px; background: #1a1a2e; color: white; }
+    .pricing h2 { text-align: center; font-size: 36px; margin-bottom: 50px; }
+    .price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; max-width: 900px; margin: 0 auto; }
+    .price-card { background: rgba(255,255,255,0.06); padding: 35px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); }
+    .price-card.featured { border-color: #4CAF50; background: rgba(76,175,80,0.08); }
+    .price-card h3 { font-size: 22px; margin-bottom: 5px; }
+    .price-card .price { font-size: 42px; font-weight: 800; margin: 15px 0; }
+    .price-card .price span { font-size: 16px; opacity: 0.6; font-weight: 400; }
+    .price-card ul { list-style: none; margin: 20px 0 30px; }
+    .price-card li { padding: 6px 0; font-size: 14px; opacity: 0.85; }
+    .price-card li::before { content: '✓ '; color: #4CAF50; font-weight: bold; }
+    .price-card a { display: block; text-align: center; background: #4CAF50; color: white; padding: 14px; border-radius: 8px; text-decoration: none; font-weight: 600; }
+
+    .cta-bottom { text-align: center; padding: 80px 20px; }
+    .cta-bottom h2 { font-size: 36px; margin-bottom: 15px; }
+    .cta-bottom p { color: #666; margin-bottom: 30px; font-size: 18px; }
+
+    .footer { text-align: center; padding: 30px; color: #999; font-size: 13px; border-top: 1px solid #eee; }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 32px; }
+      .nav { padding: 15px 20px; }
+      .nav-links a { margin-left: 15px; font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-logo">Real<span>Catch</span></a>
+  <div class="nav-links">
+    <a href="#pricing">Pricing</a>
+    <a href="/login">Log In</a>
+    <a href="/signup" class="btn">Start Free</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1>Catch <span>motivated sellers</span> before anyone else</h1>
+  <p>AI scans public records daily — tax delinquencies, foreclosures, ownership changes — and scores every property so you only see the best leads.</p>
+  <a href="/signup" class="hero-cta">Start Free Trial</a>
+  <p class="hero-sub">No credit card required. See 3 free leads instantly.</p>
+</section>
+
+<section class="signals">
+  <h2>Signals We Track</h2>
+  <div class="signal-grid">
+    <div class="signal-card">
+      <div class="icon">🏚️</div>
+      <h3>Tax Delinquent</h3>
+      <p>Properties with unpaid property taxes — owners often willing to sell below market to escape the debt.</p>
+    </div>
+    <div class="signal-card">
+      <div class="icon">✈️</div>
+      <h3>Absentee Owners</h3>
+      <p>Out-of-state owners who may be tired of managing property from afar. High motivation sellers.</p>
+    </div>
+    <div class="signal-card">
+      <div class="icon">⚖️</div>
+      <h3>Foreclosure Auctions</h3>
+      <p>Upcoming court-ordered auctions with opening bids, assessed values, and case details.</p>
+    </div>
+    <div class="signal-card">
+      <div class="icon">🔄</div>
+      <h3>Ownership Changes</h3>
+      <p>Properties that recently changed hands — catch flips, estate sales, and quick turnover patterns.</p>
+    </div>
+    <div class="signal-card">
+      <div class="icon">📉</div>
+      <h3>Price Anomalies</h3>
+      <p>Properties sold significantly below assessed value — potential undervalued deals.</p>
+    </div>
+    <div class="signal-card">
+      <div class="icon">🏢</div>
+      <h3>New LLC Filings</h3>
+      <p>Fresh real estate LLCs filing in Florida — find active investors and potential partners.</p>
+    </div>
+  </div>
+</section>
+
+<section class="how-it-works">
+  <h2>How It Works</h2>
+  <div class="step">
+    <div class="step-num">1</div>
+    <div>
+      <h3>We scan public records daily</h3>
+      <p>Our scrapers pull from county property appraiser databases, Sunbiz filings, and foreclosure auction sites every single day.</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">2</div>
+    <div>
+      <h3>AI scores every property</h3>
+      <p>Our scoring engine combines 8+ signals — tax status, ownership patterns, value anomalies — into a single 0-100 lead score.</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">3</div>
+    <div>
+      <h3>You get the best leads delivered</h3>
+      <p>Daily or weekly email digest with only the highest-scoring leads. Filter by zip code, property type, and minimum score.</p>
+    </div>
+  </div>
+</section>
+
+<section class="pricing" id="pricing">
+  <h2>Simple Pricing</h2>
+  <div class="price-grid">
+    <div class="price-card">
+      <h3>Basic</h3>
+      <div class="price">$19<span>/mo</span></div>
+      <ul>
+        <li>Weekly email digest</li>
+        <li>1 zip code</li>
+        <li>Email alerts</li>
+        <li>Lead scores + summaries</li>
+      </ul>
+      <a href="/signup?plan=basic">Get Started</a>
+    </div>
+    <div class="price-card featured">
+      <h3>Pro ⭐</h3>
+      <div class="price">$39<span>/mo</span></div>
+      <ul>
+        <li>Daily email digest</li>
+        <li>All Volusia zip codes</li>
+        <li>Dashboard access</li>
+        <li>CSV export</li>
+        <li>Score filtering</li>
+      </ul>
+      <a href="/signup?plan=pro">Start Pro</a>
+    </div>
+    <div class="price-card">
+      <h3>Premium</h3>
+      <div class="price">$69<span>/mo</span></div>
+      <ul>
+        <li>Daily digest + priority alerts</li>
+        <li>Multi-county coverage</li>
+        <li>API access</li>
+        <li>CSV export</li>
+        <li>Custom filters</li>
+      </ul>
+      <a href="/signup?plan=premium">Go Premium</a>
+    </div>
+  </div>
+</section>
+
+<section class="cta-bottom">
+  <h2>Stop searching. Start catching.</h2>
+  <p>Join investors who get tomorrow's deals delivered today.</p>
+  <a href="/signup" class="hero-cta">Start Free Trial</a>
+</section>
+
+<footer class="footer">
+  &copy; 2025 RealCatch.io — All rights reserved.
+</footer>
+
+</body>
+</html>
