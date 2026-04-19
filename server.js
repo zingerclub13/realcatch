@@ -76,8 +76,18 @@ app.get('/signup', (req, res) => {
 });
 
 // Health check
-app.get('/health', (req, res) => {
-  res.json({ status: 'ok', service: 'realcatch', timestamp: new Date().toISOString() });
+app.get('/health', async (req, res) => {
+  const result = { status: 'ok', service: 'realcatch', timestamp: new Date().toISOString() };
+  try {
+    const db = require('./src/db/pool');
+    const tables = await db.query("SELECT tablename FROM pg_tables WHERE schemaname='public' ORDER BY tablename");
+    result.tables = tables.rows.map(r => r.tablename);
+    result.db = 'connected';
+  } catch (err) {
+    result.db = 'error';
+    result.dbError = err.message;
+  }
+  res.json(result);
 });
 
 // Start cron jobs in production
