@@ -109,7 +109,11 @@ async function start() {
     `);
 
     // Run each statement individually
-    const statements = sql.split(';').map(s => s.trim()).filter(s => s.length > 0 && !s.startsWith('--'));
+    const statements = sql
+      .replace(/--.*$/gm, '')  // strip SQL comments
+      .split(';')
+      .map(s => s.trim())
+      .filter(s => s.length > 0);
     for (const stmt of statements) {
       try {
         await db.query(stmt);
