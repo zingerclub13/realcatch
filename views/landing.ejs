@@ -46,25 +46,30 @@
     .map-container { max-width: 1000px; margin: 0 auto; position: relative; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 30px; min-height: 500px; overflow: hidden; }
 
     /* US Map SVG */
-    .us-map { width: 100%; height: auto; transition: opacity 0.4s ease; }
-    .us-map .state { fill: #1e1e3a; stroke: #2a2a4a; stroke-width: 1; transition: all 0.3s ease; cursor: default; }
-    .us-map .state.available { fill: #1a3a1a; stroke: #2d5a2d; cursor: pointer; }
-    .us-map .state.available:hover { fill: #265e26; stroke: #4CAF50; }
-    .us-map .state.active { fill: #2e7d32; stroke: #4CAF50; stroke-width: 2; }
-    .us-map .state-label { font-size: 9px; fill: rgba(255,255,255,0.2); pointer-events: none; font-weight: 600; }
-    .us-map .state.available .state-label, .us-map .state-label.available { fill: rgba(255,255,255,0.5); }
+    .us-map { width: 100%; height: auto; display: block; transition: opacity 0.4s ease; }
+    .us-map .state { fill: #252550; stroke: #3a3a6a; stroke-width: 0.8; transition: all 0.3s ease; cursor: default; }
+    .us-map .state:hover { fill: #2e2e5e; }
+    .us-map .state.available { fill: #1b5e20; stroke: #4CAF50; stroke-width: 1.5; cursor: pointer; filter: drop-shadow(0 0 6px rgba(76,175,80,0.4)); }
+    .us-map .state.available:hover { fill: #2e7d32; stroke: #66BB6A; filter: drop-shadow(0 0 12px rgba(76,175,80,0.6)); }
+    .us-map .state-border { fill: none; stroke: #2a2a50; stroke-width: 0.6; pointer-events: none; }
+    .us-map .fl-label { font-size: 14px; fill: #4CAF50; font-weight: 800; pointer-events: none; text-shadow: 0 0 10px rgba(76,175,80,0.6); }
 
     /* FL detail view */
     .fl-detail { display: none; width: 100%; min-height: 460px; position: relative; }
     .fl-detail.visible { display: block; }
-    .fl-detail .fl-map { width: 100%; height: auto; }
-    .fl-detail .county { fill: #1e1e3a; stroke: #2a2a4a; stroke-width: 0.5; transition: all 0.3s; }
+    .fl-detail .fl-map { width: 100%; height: auto; display: block; }
+    .fl-detail .county { fill: #252550; stroke: #3a3a6a; stroke-width: 0.5; transition: all 0.3s; cursor: default; }
+    .fl-detail .county:hover { fill: #2e2e5e; }
     .fl-detail .county.available { fill: #2e7d32; stroke: #4CAF50; stroke-width: 1.5; cursor: pointer; filter: drop-shadow(0 0 8px rgba(76,175,80,0.4)); }
     .fl-detail .county.available:hover { fill: #43a047; filter: drop-shadow(0 0 14px rgba(76,175,80,0.6)); }
-    .fl-detail .county-label { font-size: 11px; fill: rgba(255,255,255,0.15); pointer-events: none; }
-    .fl-detail .county-label.available { fill: white; font-weight: 700; font-size: 13px; }
+    .fl-detail .county-label { font-size: 5px; fill: white; font-weight: 700; pointer-events: none; }
 
-    .coming-soon-tag { position: absolute; top: 20px; right: 20px; background: rgba(255,171,0,0.15); color: #ffab00; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 700; border: 1px solid rgba(255,171,0,0.3); }
+    .coming-soon-tag { position: absolute; top: 20px; right: 20px; background: rgba(255,171,0,0.15); color: #ffab00; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 700; border: 1px solid rgba(255,171,0,0.3); z-index: 5; }
+
+    /* Loading indicator */
+    .map-loading { text-align: center; padding: 120px 20px; color: rgba(255,255,255,0.25); font-size: 15px; }
+    .map-loading .spinner { display: inline-block; width: 24px; height: 24px; border: 2px solid rgba(255,255,255,0.1); border-top-color: #4CAF50; border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 12px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
     /* Volusia popup */
     .county-popup { display: none; position: absolute; background: #1a1a2e; border: 1px solid rgba(76,175,80,0.3); border-radius: 12px; padding: 24px; width: 320px; box-shadow: 0 20px 60px rgba(0,0,0,0.6); z-index: 10; }
@@ -137,7 +142,7 @@
     <a href="#map">Coverage</a>
     <a href="#roadmap">Roadmap</a>
     <a href="/login">Log In</a>
-    <a href="/signup" class="btn">Start Free</a>
+    <a href="/signup" class="btn">Start Trial</a>
   </div>
 </nav>
 
@@ -168,145 +173,19 @@
   </div>
 
   <div class="map-container" id="mapContainer">
-    <!-- === USA MAP (simplified SVG) === -->
-    <svg id="usaMap" class="us-map" viewBox="0 0 960 600" xmlns="http://www.w3.org/2000/svg">
-      <!-- All greyed-out states (simplified paths) -->
-      <g id="states">
-        <path class="state" id="WA" d="M125,35 L175,30 L195,35 L200,60 L190,80 L170,85 L140,80 L120,60 Z"><title>Washington</title></path>
-        <path class="state" id="OR" d="M120,60 L140,80 L170,85 L190,80 L195,100 L185,120 L135,115 L110,90 Z"><title>Oregon</title></path>
-        <path class="state" id="CA" d="M110,90 L135,115 L140,150 L145,190 L140,230 L120,240 L100,210 L95,170 L100,130 Z"><title>California</title></path>
-        <path class="state" id="NV" d="M135,115 L185,120 L180,170 L170,200 L145,190 L140,150 Z"><title>Nevada</title></path>
-        <path class="state" id="ID" d="M170,85 L190,80 L200,60 L220,55 L230,90 L220,120 L195,115 L185,120 L195,100 Z"><title>Idaho</title></path>
-        <path class="state" id="MT" d="M200,60 L220,55 L300,45 L310,50 L305,85 L280,90 L250,85 L230,90 Z"><title>Montana</title></path>
-        <path class="state" id="WY" d="M230,90 L250,85 L280,90 L305,85 L300,130 L240,135 L230,130 Z"><title>Wyoming</title></path>
-        <path class="state" id="UT" d="M185,120 L195,115 L220,120 L230,130 L240,135 L235,175 L200,175 L180,170 Z"><title>Utah</title></path>
-        <path class="state" id="CO" d="M240,135 L300,130 L310,140 L310,180 L240,185 L235,175 Z"><title>Colorado</title></path>
-        <path class="state" id="AZ" d="M140,230 L145,190 L170,200 L180,170 L200,175 L205,220 L190,250 L155,255 Z"><title>Arizona</title></path>
-        <path class="state" id="NM" d="M200,175 L235,175 L240,185 L245,240 L230,260 L195,260 L190,250 L205,220 Z"><title>New Mexico</title></path>
-        <path class="state" id="ND" d="M310,50 L380,48 L385,55 L390,90 L310,95 L305,85 Z"><title>North Dakota</title></path>
-        <path class="state" id="SD" d="M310,95 L390,90 L395,100 L395,135 L315,140 L300,130 Z"><title>South Dakota</title></path>
-        <path class="state" id="NE" d="M300,130 L315,140 L395,135 L400,150 L395,170 L310,175 L310,140 Z"><title>Nebraska</title></path>
-        <path class="state" id="KS" d="M310,175 L395,170 L400,180 L400,215 L315,220 L310,180 Z"><title>Kansas</title></path>
-        <path class="state" id="OK" d="M310,220 L315,220 L400,215 L405,230 L400,265 L340,265 L310,255 L295,260 L300,230 Z"><title>Oklahoma</title></path>
-        <path class="state" id="TX" d="M295,260 L310,255 L340,265 L400,265 L420,290 L410,340 L380,380 L340,395 L300,380 L280,340 L270,300 Z"><title>Texas</title></path>
-        <path class="state" id="MN" d="M385,55 L420,50 L440,48 L445,60 L450,100 L445,120 L395,125 L395,100 L390,90 Z"><title>Minnesota</title></path>
-        <path class="state" id="IA" d="M395,125 L445,120 L455,130 L460,160 L450,175 L400,180 L395,170 L400,150 L395,135 Z"><title>Iowa</title></path>
-        <path class="state" id="MO" d="M400,180 L450,175 L460,190 L470,215 L465,250 L440,260 L420,250 L405,230 L400,215 Z"><title>Missouri</title></path>
-        <path class="state" id="AR" d="M420,250 L440,260 L465,250 L470,270 L465,300 L430,300 L415,290 Z"><title>Arkansas</title></path>
-        <path class="state" id="LA" d="M415,290 L430,300 L465,300 L475,320 L480,350 L450,365 L430,350 L420,310 Z"><title>Louisiana</title></path>
-        <path class="state" id="WI" d="M450,100 L480,60 L510,65 L520,80 L515,100 L510,130 L460,135 L455,130 L445,120 Z"><title>Wisconsin</title></path>
-        <path class="state" id="IL" d="M460,135 L510,130 L515,145 L520,190 L510,220 L480,230 L470,215 L460,190 L460,160 Z"><title>Illinois</title></path>
-        <path class="state" id="MS" d="M480,270 L500,270 L510,300 L510,340 L500,355 L480,350 L475,320 L470,270 Z"><title>Mississippi</title></path>
-        <path class="state" id="AL" d="M530,260 L560,260 L565,300 L560,340 L540,350 L520,340 L510,300 L500,270 Z"><title>Alabama</title></path>
-        <path class="state" id="TN" d="M480,240 L530,235 L580,230 L620,225 L615,250 L570,255 L530,260 L480,265 Z"><title>Tennessee</title></path>
-        <path class="state" id="KY" d="M510,210 L540,205 L580,200 L620,195 L630,210 L620,225 L580,230 L530,235 L510,220 Z"><title>Kentucky</title></path>
-        <path class="state" id="IN" d="M520,160 L545,155 L550,185 L545,200 L540,205 L510,210 L510,190 L515,170 Z"><title>Indiana</title></path>
-        <path class="state" id="MI" d="M530,65 L560,60 L580,70 L575,110 L560,130 L545,145 L520,140 L515,120 L520,100 L515,80 Z"><title>Michigan</title></path>
-        <path class="state" id="OH" d="M560,145 L600,140 L615,150 L620,180 L605,195 L580,200 L555,195 L550,185 L545,155 Z"><title>Ohio</title></path>
-        <path class="state" id="WV" d="M620,180 L640,175 L650,190 L640,210 L630,210 L620,195 L605,195 Z"><title>West Virginia</title></path>
-        <path class="state" id="VA" d="M620,195 L640,210 L650,190 L680,180 L720,175 L710,195 L670,210 L640,220 Z"><title>Virginia</title></path>
-        <path class="state" id="NC" d="M620,225 L640,220 L670,210 L710,195 L740,200 L755,210 L720,230 L660,240 Z"><title>North Carolina</title></path>
-        <path class="state" id="SC" d="M660,240 L690,238 L720,230 L710,260 L680,270 L660,260 Z"><title>South Carolina</title></path>
-        <path class="state" id="GA" d="M560,260 L600,250 L630,250 L660,260 L680,270 L680,310 L660,330 L620,340 L590,330 L565,300 Z"><title>Georgia</title></path>
-        <path class="state" id="PA" d="M620,140 L660,130 L720,125 L725,145 L720,160 L680,165 L640,175 L620,170 L615,150 Z"><title>Pennsylvania</title></path>
-        <path class="state" id="NY" d="M660,80 L720,70 L750,75 L760,95 L740,115 L725,125 L720,125 L660,130 L650,110 Z"><title>New York</title></path>
-        <path class="state" id="VT" d="M735,60 L742,55 L748,70 L745,85 L738,80 Z"><title>Vermont</title></path>
-        <path class="state" id="NH" d="M748,55 L755,50 L760,65 L755,80 L748,70 Z"><title>New Hampshire</title></path>
-        <path class="state" id="ME" d="M760,20 L780,15 L790,30 L785,55 L770,65 L760,65 L755,50 L755,35 Z"><title>Maine</title></path>
-        <path class="state" id="MA" d="M745,90 L770,85 L780,90 L775,95 L750,98 Z"><title>Massachusetts</title></path>
-        <path class="state" id="RI" d="M770,95 L778,93 L778,100 L772,100 Z"><title>Rhode Island</title></path>
-        <path class="state" id="CT" d="M750,100 L770,97 L772,105 L752,108 Z"><title>Connecticut</title></path>
-        <path class="state" id="NJ" d="M728,138 L738,132 L745,145 L740,158 L732,155 Z"><title>New Jersey</title></path>
-        <path class="state" id="DE" d="M720,160 L730,155 L735,168 L725,172 Z"><title>Delaware</title></path>
-        <path class="state" id="MD" d="M680,165 L720,160 L725,172 L730,180 L700,185 Z"><title>Maryland</title></path>
+    <!-- Loading indicator shown while D3 fetches TopoJSON -->
+    <div class="map-loading" id="mapLoading">
+      <div class="spinner"></div>
+      <div>Loading map data...</div>
+    </div>
 
-        <!-- FLORIDA — clickable, highlighted -->
-        <path class="state available" id="FL" d="M590,330 L620,340 L660,330 L680,310 L700,340 L710,380 L690,420 L670,445 L650,450 L640,430 L630,400 L610,370 L580,350 L570,340 Z" onclick="zoomFlorida()"><title>Florida — Click to explore counties</title></path>
+    <!-- USA Map - rendered by D3 + TopoJSON -->
+    <svg id="usaMap" class="us-map" viewBox="0 0 975 610" style="display:none"></svg>
 
-        <!-- Alaska & Hawaii (small insets) -->
-        <path class="state" id="AK" d="M80,380 L130,370 L160,380 L170,400 L140,420 L100,420 L70,410 Z"><title>Alaska</title></path>
-        <path class="state" id="HI" d="M230,410 L245,405 L260,410 L255,420 L240,425 L230,418 Z"><title>Hawaii</title></path>
-      </g>
-
-      <!-- Florida label -->
-      <text x="640" y="365" class="state-label available" style="font-size:13px;fill:#4CAF50;font-weight:800">FL ✦</text>
-
-      <!-- "Coming Soon" labels for nearby states -->
-      <text x="530" y="320" class="state-label" style="font-size:8px">GA</text>
-      <text x="477" y="345" class="state-label" style="font-size:8px">LA</text>
-      <text x="555" y="245" class="state-label" style="font-size:8px">TN</text>
-      <text x="380" y="365" class="state-label" style="font-size:8px">TX</text>
-    </svg>
-
-    <!-- === FLORIDA COUNTY DETAIL VIEW === -->
+    <!-- Florida County Detail View -->
     <div class="fl-detail" id="flDetail">
       <div class="coming-soon-tag">Other counties coming Q3 2026</div>
-      <svg class="fl-map" viewBox="0 0 600 700" xmlns="http://www.w3.org/2000/svg">
-        <!-- Florida outline and counties (simplified) -->
-        <!-- Panhandle region -->
-        <path class="county" d="M30,60 L80,50 L100,55 L100,85 L70,90 L30,80 Z"><title>Escambia</title></path>
-        <path class="county" d="M80,50 L120,45 L130,55 L120,80 L100,85 L100,55 Z"><title>Santa Rosa</title></path>
-        <path class="county" d="M120,45 L160,42 L165,60 L145,80 L120,80 L130,55 Z"><title>Okaloosa</title></path>
-        <path class="county" d="M160,42 L200,38 L205,60 L185,75 L165,60 Z"><title>Walton</title></path>
-        <path class="county" d="M200,38 L230,35 L240,55 L225,70 L205,60 Z"><title>Bay</title></path>
-        <path class="county" d="M230,35 L265,33 L270,50 L250,65 L240,55 Z"><title>Gulf</title></path>
-        <path class="county" d="M100,85 L120,80 L145,80 L150,100 L140,110 L110,105 Z"><title>Holmes/Washington</title></path>
-        <path class="county" d="M145,80 L185,75 L195,95 L175,110 L150,100 Z"><title>Jackson</title></path>
-        <path class="county" d="M185,75 L225,70 L235,90 L215,105 L195,95 Z"><title>Calhoun/Liberty</title></path>
-        <path class="county" d="M225,70 L250,65 L270,50 L280,70 L275,95 L250,100 L235,90 Z"><title>Franklin/Wakulla</title></path>
-        <path class="county" d="M265,33 L310,30 L320,50 L310,70 L280,70 L270,50 Z"><title>Taylor/Jefferson</title></path>
-        <path class="county" d="M310,70 L280,70 L275,95 L300,105 L320,95 Z"><title>Leon/Gadsden</title></path>
-
-        <!-- North FL -->
-        <path class="county" d="M310,30 L370,28 L380,50 L370,70 L340,75 L320,65 Z"><title>Madison/Hamilton</title></path>
-        <path class="county" d="M370,28 L420,25 L430,50 L420,70 L380,65 L380,50 Z"><title>Suwannee/Columbia</title></path>
-        <path class="county" d="M420,25 L470,22 L480,45 L470,65 L440,70 L430,50 Z"><title>Baker/Nassau</title></path>
-        <path class="county" d="M470,22 L530,18 L540,40 L530,60 L490,60 L480,45 Z"><title>Duval</title></path>
-        <path class="county" d="M320,65 L340,75 L370,70 L380,65 L380,90 L350,100 L320,95 Z"><title>Lafayette/Dixie</title></path>
-        <path class="county" d="M380,90 L420,70 L440,70 L450,90 L440,110 L410,110 L380,105 Z"><title>Alachua/Union</title></path>
-        <path class="county" d="M440,70 L470,65 L490,60 L500,80 L490,100 L460,100 L450,90 Z"><title>Clay/St. Johns</title></path>
-
-        <!-- Central-North -->
-        <path class="county" d="M320,95 L350,100 L380,105 L375,130 L340,135 L310,125 Z"><title>Levy/Citrus</title></path>
-        <path class="county" d="M380,105 L410,110 L440,110 L445,135 L420,145 L390,140 L375,130 Z"><title>Marion/Putnam</title></path>
-        <path class="county" d="M450,90 L460,100 L490,100 L500,120 L490,140 L460,140 L445,135 L440,110 Z"><title>Flagler</title></path>
-
-        <!-- VOLUSIA COUNTY — THE HIGHLIGHTED ONE -->
-        <path class="county available" id="volusia" d="M460,140 L490,140 L510,155 L520,180 L510,210 L480,215 L455,200 L445,175 L445,155 Z" onclick="showVolusiaPopup(event)">
-          <title>Volusia County — LIVE</title>
-        </path>
-        <text class="county-label available" x="470" y="182">VOLUSIA</text>
-        <!-- Pulsing dot on Volusia -->
-        <circle cx="480" cy="175" r="5" fill="#4CAF50" opacity="0.8">
-          <animate attributeName="r" values="5;10;5" dur="2s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2s" repeatCount="indefinite"/>
-        </circle>
-
-        <!-- Central FL -->
-        <path class="county" d="M375,130 L390,140 L420,145 L430,165 L415,185 L385,180 L360,165 L340,145 Z"><title>Lake/Sumter</title></path>
-        <path class="county" d="M420,145 L445,155 L445,175 L455,200 L440,215 L415,210 L415,185 L430,165 Z"><title>Seminole/Orange</title></path>
-        <path class="county" d="M510,210 L530,225 L530,250 L505,260 L480,250 L480,215 Z"><title>Brevard</title></path>
-        <path class="county" d="M415,210 L440,215 L455,200 L480,215 L480,250 L460,260 L440,255 L420,245 Z"><title>Osceola</title></path>
-        <path class="county" d="M340,145 L360,165 L385,180 L380,210 L355,220 L330,210 L310,185 L310,160 Z"><title>Hernando/Pasco</title></path>
-        <path class="county" d="M310,185 L330,210 L340,235 L325,260 L300,255 L290,230 L295,200 Z"><title>Hillsborough/Pinellas</title></path>
-        <path class="county" d="M330,210 L355,220 L380,210 L390,240 L375,265 L350,270 L340,255 L340,235 Z"><title>Polk</title></path>
-        <path class="county" d="M380,210 L415,210 L420,245 L410,275 L390,280 L375,265 L390,240 Z"><title>Osceola South</title></path>
-
-        <!-- South-Central -->
-        <path class="county" d="M505,260 L530,250 L540,280 L530,310 L505,310 L490,295 L480,270 Z"><title>Indian River/St. Lucie</title></path>
-        <path class="county" d="M410,275 L440,255 L460,260 L480,270 L490,295 L470,310 L440,310 L420,300 Z"><title>Okeechobee/Highlands</title></path>
-        <path class="county" d="M300,255 L325,260 L340,255 L350,270 L345,300 L320,310 L295,300 Z"><title>Sarasota/Manatee</title></path>
-        <path class="county" d="M295,300 L320,310 L345,300 L360,320 L350,350 L320,360 L295,345 Z"><title>Charlotte/Lee</title></path>
-        <path class="county" d="M350,270 L375,265 L390,280 L410,275 L420,300 L400,320 L380,330 L360,320 L345,300 Z"><title>Glades/Hendry</title></path>
-
-        <!-- South FL -->
-        <path class="county" d="M420,300 L440,310 L470,310 L490,325 L490,355 L460,365 L430,360 L400,340 L400,320 Z"><title>Martin/Palm Beach</title></path>
-        <path class="county" d="M320,360 L350,350 L380,330 L400,340 L430,360 L460,365 L460,395 L440,415 L400,420 L370,405 L340,390 Z"><title>Collier</title></path>
-        <path class="county" d="M460,365 L490,355 L510,370 L520,400 L510,430 L490,440 L470,435 L460,415 L460,395 Z"><title>Broward/Miami-Dade</title></path>
-
-        <!-- Everglades / Keys suggestion -->
-        <path class="county" d="M340,390 L370,405 L400,420 L440,415 L460,415 L470,435 L490,440 L495,460 L470,480 L440,490 L420,480 L400,460 L370,440 L345,420 Z"><title>Monroe/Keys</title></path>
-      </svg>
+      <div id="flMapWrap"></div>
 
       <!-- Volusia County Popup -->
       <div class="county-popup" id="volusiaPopup">
@@ -412,8 +291,8 @@
   <div class="beta-card">
     <div class="beta-live"><span class="dot"></span> Live in Volusia County</div>
     <h2>Get in early. Get the edge.</h2>
-    <p>RealCatch is in beta — Volusia County investors are already finding deals before MLS. Sign up free and see 3 leads instantly. More counties launching soon.</p>
-    <a href="https://volusia.realcatch.io/signup" class="hero-cta">Try Volusia County Free →</a>
+    <p>RealCatch is in beta — lock in early-adopter pricing before rates go up. Volusia County investors are already finding deals before MLS.</p>
+    <a href="https://volusia.realcatch.io/signup" class="hero-cta">Lock In Beta Pricing →</a>
   </div>
 </section>
 
@@ -421,45 +300,190 @@
   &copy; 2026 RealCatch.io — AI-powered real estate intelligence. All data sourced from public records.
 </footer>
 
+<!-- D3 + TopoJSON from CDN -->
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
 <script>
-const usaMap = document.getElementById('usaMap');
-const flDetail = document.getElementById('flDetail');
-const btnUSA = document.getElementById('btnUSA');
-const btnFL = document.getElementById('btnFL');
-const breadcrumb = document.getElementById('breadcrumb');
+var FL_FIPS = '12';
+var VOLUSIA_FIPS = '12127';
 
+// State abbreviation lookup
+var stateAbbr = {
+  1:'AL',2:'AK',4:'AZ',5:'AR',6:'CA',8:'CO',9:'CT',10:'DE',11:'DC',12:'FL',
+  13:'GA',15:'HI',16:'ID',17:'IL',18:'IN',19:'IA',20:'KS',21:'KY',22:'LA',
+  23:'ME',24:'MD',25:'MA',26:'MI',27:'MN',28:'MS',29:'MO',30:'MT',31:'NE',
+  32:'NV',33:'NH',34:'NJ',35:'NM',36:'NY',37:'NC',38:'ND',39:'OH',40:'OK',
+  41:'OR',42:'PA',44:'RI',45:'SC',46:'SD',47:'TN',48:'TX',49:'UT',50:'VT',
+  51:'VA',53:'WA',54:'WV',55:'WI',56:'WY'
+};
+
+// Large enough states to show abbreviation labels
+var labelStates = [6,12,13,17,22,26,27,28,36,37,39,42,47,48,55];
+
+async function initMaps() {
+  try {
+    var results = await Promise.all([
+      d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-albers-10m.json'),
+      d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/counties-albers-10m.json')
+    ]);
+    var statesData = results[0];
+    var countiesData = results[1];
+  } catch (err) {
+    document.getElementById('mapLoading').innerHTML = '<div style="color:#ff5252">Failed to load map. Please refresh.</div>';
+    return;
+  }
+
+  var states = topojson.feature(statesData, statesData.objects.states);
+  var path = d3.geoPath();
+
+  // Hide loading, show map
+  document.getElementById('mapLoading').style.display = 'none';
+  document.getElementById('usaMap').style.display = '';
+
+  // ========================
+  // US STATES MAP
+  // ========================
+  var usaSvg = d3.select('#usaMap');
+
+  // Render state paths
+  usaSvg.selectAll('path.state')
+    .data(states.features)
+    .join('path')
+    .attr('d', path)
+    .attr('class', function(d) { return String(d.id) === FL_FIPS ? 'state available' : 'state'; })
+    .on('click', function(e, d) { if (String(d.id) === FL_FIPS) zoomFlorida(); })
+    .append('title')
+    .text(function(d) { return (d.properties && d.properties.name) || stateAbbr[d.id] || ''; });
+
+  // FL label with glow
+  var flFeature = states.features.find(function(d) { return String(d.id) === FL_FIPS; });
+  if (flFeature) {
+    var flc = path.centroid(flFeature);
+    usaSvg.append('text')
+      .attr('x', flc[0]).attr('y', flc[1])
+      .attr('text-anchor', 'middle')
+      .attr('dominant-baseline', 'central')
+      .attr('class', 'fl-label')
+      .text('FL \u2726');
+  }
+
+  // Abbreviation labels for large states
+  states.features.forEach(function(d) {
+    if (labelStates.indexOf(+d.id) !== -1 && String(d.id) !== FL_FIPS) {
+      var c = path.centroid(d);
+      if (c[0] && c[1]) {
+        usaSvg.append('text')
+          .attr('x', c[0]).attr('y', c[1])
+          .attr('text-anchor', 'middle')
+          .attr('dominant-baseline', 'central')
+          .style('font-size', '10px')
+          .style('fill', 'rgba(255,255,255,0.15)')
+          .style('font-weight', '600')
+          .style('pointer-events', 'none')
+          .text(stateAbbr[+d.id] || '');
+      }
+    }
+  });
+
+  // ========================
+  // FLORIDA COUNTIES MAP
+  // ========================
+  var allCounties = topojson.feature(countiesData, countiesData.objects.counties);
+  var flCounties = allCounties.features.filter(function(d) {
+    return String(d.id).substring(0, 2) === FL_FIPS;
+  });
+
+  // Compute FL bounding box
+  var flCollection = { type: 'FeatureCollection', features: flCounties };
+  var bounds = path.bounds(flCollection);
+  var x0 = bounds[0][0], y0 = bounds[0][1];
+  var x1 = bounds[1][0], y1 = bounds[1][1];
+  var pad = 30;
+
+  var flSvg = d3.select('#flMapWrap')
+    .append('svg')
+    .attr('class', 'fl-map')
+    .attr('viewBox', (x0 - pad) + ' ' + (y0 - pad) + ' ' + (x1 - x0 + pad * 2) + ' ' + (y1 - y0 + pad * 2));
+
+  // Render county paths
+  flSvg.selectAll('path.county')
+    .data(flCounties)
+    .join('path')
+    .attr('d', path)
+    .attr('class', function(d) { return String(d.id) === VOLUSIA_FIPS ? 'county available' : 'county'; })
+    .on('click', function(e, d) {
+      if (String(d.id) === VOLUSIA_FIPS) showVolusiaPopup(e);
+    })
+    .append('title')
+    .text(function(d) { return String(d.id) === VOLUSIA_FIPS ? 'Volusia County — LIVE' : ''; });
+
+  // Volusia label + pulsing glow
+  var volusia = flCounties.find(function(d) { return String(d.id) === VOLUSIA_FIPS; });
+  if (volusia) {
+    var vc = path.centroid(volusia);
+
+    // Label
+    flSvg.append('text')
+      .attr('x', vc[0]).attr('y', vc[1])
+      .attr('text-anchor', 'middle')
+      .attr('dominant-baseline', 'central')
+      .attr('class', 'county-label')
+      .text('VOLUSIA');
+
+    // Pulsing dot
+    var pulseG = flSvg.append('g');
+    pulseG.append('circle')
+      .attr('cx', vc[0]).attr('cy', vc[1] - 8)
+      .attr('r', 2).attr('fill', '#4CAF50');
+
+    var ring = pulseG.append('circle')
+      .attr('cx', vc[0]).attr('cy', vc[1] - 8)
+      .attr('r', 2).attr('fill', '#4CAF50').attr('opacity', 0.6);
+    ring.append('animate')
+      .attr('attributeName', 'r').attr('values', '2;8;2')
+      .attr('dur', '2s').attr('repeatCount', 'indefinite');
+    ring.append('animate')
+      .attr('attributeName', 'opacity').attr('values', '0.6;0;0.6')
+      .attr('dur', '2s').attr('repeatCount', 'indefinite');
+  }
+}
+
+// ========================
+// NAVIGATION
+// ========================
 function showUSA() {
-  usaMap.style.display = '';
-  usaMap.style.opacity = '1';
-  flDetail.classList.remove('visible');
-  btnUSA.classList.add('active');
-  btnFL.classList.remove('active');
-  breadcrumb.innerHTML = '<span class="current">United States</span>';
+  document.getElementById('usaMap').style.display = '';
+  document.getElementById('usaMap').style.opacity = '1';
+  document.getElementById('flDetail').classList.remove('visible');
+  document.getElementById('btnUSA').classList.add('active');
+  document.getElementById('btnFL').classList.remove('active');
+  document.getElementById('breadcrumb').innerHTML = '<span class="current">United States</span>';
   closePopup();
 }
 
 function zoomFlorida() {
+  var usaMap = document.getElementById('usaMap');
   usaMap.style.opacity = '0';
-  setTimeout(() => {
+  setTimeout(function() {
     usaMap.style.display = 'none';
-    flDetail.classList.add('visible');
+    document.getElementById('flDetail').classList.add('visible');
   }, 300);
-  btnFL.classList.add('active');
-  btnUSA.classList.remove('active');
-  breadcrumb.innerHTML = '<span onclick="showUSA()">United States</span><span class="sep">›</span><span class="current">Florida</span>';
+  document.getElementById('btnFL').classList.add('active');
+  document.getElementById('btnUSA').classList.remove('active');
+  document.getElementById('breadcrumb').innerHTML =
+    '<span onclick="showUSA()">United States</span>' +
+    '<span class="sep">\u203A</span>' +
+    '<span class="current">Florida</span>';
 }
 
 function showVolusiaPopup(e) {
-  const popup = document.getElementById('volusiaPopup');
-  const container = document.getElementById('mapContainer');
-  const rect = container.getBoundingClientRect();
-
-  // Position popup near the click but keep it on screen
-  let left = Math.min(e.clientX - rect.left + 20, rect.width - 340);
-  let top = Math.min(e.clientY - rect.top - 60, rect.height - 300);
+  var popup = document.getElementById('volusiaPopup');
+  var container = document.getElementById('mapContainer');
+  var rect = container.getBoundingClientRect();
+  var left = Math.min(e.clientX - rect.left + 20, rect.width - 340);
+  var top = Math.min(e.clientY - rect.top - 60, rect.height - 300);
   if (left < 10) left = 10;
   if (top < 10) top = 10;
-
   popup.style.left = left + 'px';
   popup.style.top = top + 'px';
   popup.classList.add('visible');
@@ -469,13 +493,19 @@ function closePopup() {
   document.getElementById('volusiaPopup').classList.remove('visible');
 }
 
-// Click outside popup to close
+// Close popup on outside click
 document.addEventListener('click', function(e) {
-  const popup = document.getElementById('volusiaPopup');
-  if (popup.classList.contains('visible') && !popup.contains(e.target) && e.target.id !== 'volusia') {
-    closePopup();
+  var popup = document.getElementById('volusiaPopup');
+  if (popup.classList.contains('visible') && !popup.contains(e.target)) {
+    var target = e.target;
+    if (!target.classList || !target.classList.contains('available')) {
+      closePopup();
+    }
   }
 });
+
+// Initialize maps
+initMaps();
 </script>
 
 </body>
