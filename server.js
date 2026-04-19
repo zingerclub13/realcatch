@@ -77,17 +77,7 @@ app.get('/signup', (req, res) => {
 
 // Health check
 app.get('/health', async (req, res) => {
-  const result = { status: 'ok', service: 'realcatch', timestamp: new Date().toISOString() };
-  try {
-    const db = require('./src/db/pool');
-    const tables = await db.query("SELECT tablename FROM pg_tables WHERE schemaname='public' ORDER BY tablename");
-    result.tables = tables.rows.map(r => r.tablename);
-    result.db = 'connected';
-  } catch (err) {
-    result.db = 'error';
-    result.dbError = err.message;
-  }
-  res.json(result);
+  res.json({ status: 'ok', service: 'realcatch', timestamp: new Date().toISOString() });
 });
 
 // Initialize database schema and start server
@@ -98,15 +88,6 @@ async function start() {
     const fs = require('fs');
     const schemaPath = path.join(__dirname, 'src', 'db', 'schema.sql');
     const sql = fs.readFileSync(schemaPath, 'utf8');
-
-    // Drop legacy boilerplate tables
-    await db.query(`
-      DROP TABLE IF EXISTS bids CASCADE;
-      DROP TABLE IF EXISTS auctions CASCADE;
-      DROP TABLE IF EXISTS knex_migrations CASCADE;
-      DROP TABLE IF EXISTS knex_migrations_lock CASCADE;
-      DROP TABLE IF EXISTS users CASCADE;
-    `);
 
     // Run each statement individually
     const statements = sql
