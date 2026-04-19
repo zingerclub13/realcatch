@@ -1,42 +1,37 @@
 const axios = require('axios');
-const cheerio = require('cheerio');
 const { parse } = require('csv-parse/sync');
 const db = require('../db/pool');
 
 const VCPA_BASE = 'https://vcpa.vcgov.org';
 
-// Volusia County Property Appraiser scraper
-// Downloads tax roll data and parses property records
+// All Volusia County Non-Homestead extract files (updated weekly by VCPA)
+const NONHX_CITIES = [
+  'DAYTONA_BEACH', 'DBS', 'DEBARY', 'DELAND', 'DELTONA',
+  'EDGEWATER', 'FLAGLER_BEACH', 'HOLLY_HILL', 'LAKE_HELEN',
+  'NSB', 'OAK_HILL', 'ORANGE_CITY', 'ORMOND', 'PIERSON',
+  'PONCE_INLET', 'PORT_ORANGE', 'SOUTH_DAYTONA',
+  'UNINCORPORATED_NE', 'UNINCORPORATED_SILVER_SANDS',
+  'UNINCORPORATED_SE', 'UNINCORPORATED_WEST',
+];
 
-async function scrapePropertySearch(address) {
+// Download a single city's Non-HX extract CSV
+async function downloadCityCSV(cityKey) {
+  const url = `${VCPA_BASE}/files/extracts/nonhx/${cityKey}_NONHX_EXTRACT.csv`;
   try {
-    const res = await axios.get(`${VCPA_BASE}/api/property/search`, {
-      params: { query: address },
-      timeout: 15000,
+    const res = await axios.get(url, {
+      timeout: 30000,
       headers: { 'User-Agent': 'RealCatch/1.0 (Public Data Research)' },
+      responseType: 'text',
     });
     return res.data;
   } catch (err) {
-    console.error('VCPA search error:', err.message);
+    console.error(`Failed to download ${cityKey}: ${err.message}`);
     return null;
   }
 }
 
-async function scrapeParcelDetail(parcelId) {
-  try {
-    const res = await axios.get(`${VCPA_BASE}/api/property/${parcelId}`, {
-      timeout: 15000,
-      headers: { 'User-Agent': 'RealCatch/1.0 (Public Data Research)' },
-    });
-    return res.data;
-  } catch (err) {
-    console.error(`VCPA parcel ${parcelId} error:`, err.message);
-    return null;
-  }
-}
-
-// Parse CSV tax roll data (downloaded manually or via scheduled job)
-function parseTaxRollCSV(csvContent) {
+// Parse VCPA Non-HX extract CSV (actual column names from vcpa.vcgov.org)
+function parseNonHxCSV(csvContent) {
   const records = parse(csvContent, {
     columns: true,
     skip_empty_lines: true,
@@ -44,31 +39,54 @@ function parseTaxRollCSV(csvContent) {
     relax_column_count: true,
   });
 
-  return records.map(row => ({
-    parcel_id: row['PARCEL_ID'] || row['Parcel ID'] || row['parcel_id'],
-    owner_name: row['OWNER_NAME'] || row['Owner Name'] || row['owner_name'],
-    owner_address: row['OWNER_ADDR'] || row['Owner Address'] || row['owner_address'],
-    owner_city: row['OWNER_CITY'] || row['Owner City'] || row['owner_city'],
-    owner_state: row['OWNER_STATE'] || row['Owner State'] || row['owner_state'],
-    owner_zip: row['OWNER_ZIP'] || row['Owner Zip'] || row['owner_zip'],
-    property_address: row['PROP_ADDR'] || row['Property Address'] || row['property_address'],
-    property_city: row['PROP_CITY'] || row['Property City'] || row['property_city'],
-    property_zip: row['PROP_ZIP'] || row['Property Zip'] || row['property_zip'],
-    property_type: row['PROP_TYPE'] || row['Property Type'] || row['property_type'],
-    assessed_value: parseInt(row['ASSESSED_VALUE'] || row['Assessed Value'] || '0', 10) || null,
-    market_value: parseInt(row['MARKET_VALUE'] || row['Market Value'] || '0', 10) || null,
-    taxable_value: parseInt(row['TAXABLE_VALUE'] || row['Taxable Value'] || '0', 10) || null,
-    last_sale_date: row['SALE_DATE'] || row['Last Sale Date'] || null,
-    last_sale_price: parseInt(row['SALE_PRICE'] || row['Last Sale Price'] || '0', 10) || null,
-    homestead: (row['HOMESTEAD'] || row['Homestead'] || '').toUpperCase() === 'Y',
-    year_built: parseInt(row['YEAR_BUILT'] || row['Year Built'] || '0', 10) || null,
-    bedrooms: parseInt(row['BEDROOMS'] || row['Bedrooms'] || '0', 10) || null,
-    bathrooms: parseFloat(row['BATHROOMS'] || row['Bathrooms'] || '0') || null,
-    sqft: parseInt(row['SQFT'] || row['Living Area'] || '0', 10) || null,
-    acreage: parseFloat(row['ACREAGE'] || row['Acres'] || '0') || null,
-    legal_description: row['LEGAL_DESC'] || row['Legal Description'] || null,
-    raw_data: row,
-  }));
+  return records.map(row => {
+    // Parse mailing address for owner city/state/zip
+    const mailingParts = parseMailingAddress(
+      row['mailing_address1'], row['mailing_address2'], row['mailing_address3']
+    );
+
+    return {
+      parcel_id: row['parcelid'],
+      owner_name: row['owner'],
+      owner_address: [row['mailing_address1'], row['mailing_address2']].filter(Boolean).join(', '),
+      owner_city: mailingParts.city,
+      owner_state: mailingParts.state,
+      owner_zip: mailingParts.zip,
+      property_address: row['situs'],
+      property_city: row['situs_city'],
+      property_zip: row['situs_zipcode'],
+      property_type: row['pc_desc'] || null,
+      assessed_value: parseInt(row['just_value'] || '0', 10) || null,
+      market_value: parseInt(row['just_value'] || '0', 10) || null,
+      taxable_value: null,
+      last_sale_date: row['last_saledt'] || null,
+      last_sale_price: parseInt(row['last_saleprice'] || '0', 10) || null,
+      homestead: (row['has_hx'] || '').toUpperCase() === 'Y',
+      year_built: null,
+      bedrooms: parseInt(row['# of bedrooms'] || '0', 10) || null,
+      bathrooms: parseFloat(row['# of bathrooms'] || '0') || null,
+      sqft: parseInt(row['res sfla'] || '0', 10) || null,
+      acreage: parseFloat(row['land acres'] || '0') || null,
+      legal_description: [row['legal1'], row['legal2'], row['legal3']].filter(Boolean).join(' '),
+      raw_data: row,
+    };
+  });
+}
+
+// Extract city, state, zip from VCPA mailing address line 3 (typically "CITY ST ZIP")
+function parseMailingAddress(addr1, addr2, addr3) {
+  const result = { city: null, state: null, zip: null };
+  const line = addr3 || addr2 || '';
+  if (!line) return result;
+
+  // Match patterns like "DAYTONA BEACH FL 32114" or "NEW YORK NY 10001-2345"
+  const match = line.match(/^(.+?)\s+([A-Z]{2})\s+(\d{5}(?:-\d{4})?)$/);
+  if (match) {
+    result.city = match[1].trim();
+    result.state = match[2];
+    result.zip = match[3];
+  }
+  return result;
 }
 
 // Upsert properties into the database
@@ -169,41 +187,42 @@ async function detectOwnershipChanges(properties) {
   return changes;
 }
 
-// Main scrape job: download tax roll, detect changes, upsert
-async function runFullScrape(csvFilePath) {
-  const fs = require('fs');
+// Main scrape job: download all Non-HX CSVs, detect changes, upsert
+async function runFullScrape() {
+  console.log('Starting VCPA Non-HX extract download...');
+  let totalProperties = 0;
+  let totalInserted = 0;
+  let totalUpdated = 0;
+  let totalChanges = 0;
 
-  if (!csvFilePath) {
-    console.log('No CSV file provided. Provide path to tax roll CSV as argument.');
-    console.log('Usage: node src/scrapers/vcpa.js /path/to/taxroll.csv');
-    return;
+  for (const city of NONHX_CITIES) {
+    console.log(`  Downloading ${city}...`);
+    const csv = await downloadCityCSV(city);
+    if (!csv) continue;
+
+    const properties = parseNonHxCSV(csv);
+    console.log(`  Parsed ${properties.length} properties from ${city}`);
+    if (properties.length === 0) continue;
+
+    const changes = await detectOwnershipChanges(properties);
+    totalChanges += changes.length;
+
+    const result = await upsertProperties(properties);
+    totalInserted += result.inserted;
+    totalUpdated += result.updated;
+    totalProperties += properties.length;
+
+    // Rate limit between cities
+    await new Promise(r => setTimeout(r, 1000));
   }
 
-  console.log(`Loading tax roll from: ${csvFilePath}`);
-  const csvContent = fs.readFileSync(csvFilePath, 'utf8');
-  const properties = parseTaxRollCSV(csvContent);
-  console.log(`Parsed ${properties.length} properties`);
-
-  if (properties.length === 0) {
-    console.log('No properties parsed. Check CSV format.');
-    return;
-  }
-
-  console.log('Detecting ownership changes...');
-  const changes = await detectOwnershipChanges(properties);
-  console.log(`Found ${changes.length} ownership changes`);
-
-  console.log('Upserting properties...');
-  const result = await upsertProperties(properties);
-  console.log(`Done: ${result.inserted} inserted, ${result.updated} updated`);
-
-  return { properties: properties.length, changes: changes.length, ...result };
+  console.log(`VCPA scrape complete: ${totalProperties} properties, ${totalInserted} new, ${totalUpdated} updated, ${totalChanges} ownership changes`);
+  return { properties: totalProperties, inserted: totalInserted, updated: totalUpdated, changes: totalChanges };
 }
 
 // Run from CLI
 if (require.main === module) {
-  const csvPath = process.argv[2];
-  runFullScrape(csvPath)
+  runFullScrape()
     .then(result => {
       console.log('Scrape complete:', result);
       process.exit(0);
@@ -214,4 +233,4 @@ if (require.main === module) {
     });
 }
 
-module.exports = { runFullScrape, parseTaxRollCSV, upsertProperties, detectOwnershipChanges, scrapePropertySearch };
+module.exports = { runFullScrape, parseNonHxCSV, upsertProperties, detectOwnershipChanges };

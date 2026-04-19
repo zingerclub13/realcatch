@@ -33,10 +33,14 @@ async function scoreProperty(property) {
     }
   }
 
-  // Absentee owner (owner state != FL)
+  // Absentee owner (owner state != FL, or mailing city differs from property city)
   if (property.owner_state && property.owner_state !== 'FL') {
     signals.push({ signal: 'absentee_owner', weight: SIGNALS.absentee_owner.weight });
     rawScore += SIGNALS.absentee_owner.weight;
+  } else if (property.owner_city && property.property_city &&
+             property.owner_city.toLowerCase() !== property.property_city.toLowerCase()) {
+    signals.push({ signal: 'absentee_owner', weight: Math.round(SIGNALS.absentee_owner.weight * 0.5) });
+    rawScore += Math.round(SIGNALS.absentee_owner.weight * 0.5);
   }
 
   // Non-homestead

@@ -1,19 +1,23 @@
 const db = require('../db/pool');
 
 // Find potential customers from public data
-// Targets: RE agents, investors, wholesalers who are active in the market
+// Targets: RE investors, LLC owners, frequent buyers active in the market
 async function findProspects(limit = 50) {
-  console.log('Finding new prospects from public data...');
+  console.log('Finding new prospects from property data...');
 
-  // Find LLC filers with RE-related businesses who aren't already prospects
-  const { rows: llcProspects } = await db.query(`
-    SELECT l.entity_name, l.principal_name, l.principal_address, l.filing_date
-    FROM llc_filings l
-    LEFT JOIN prospects p ON p.source_id = l.document_number AND p.source = 'sunbiz'
-    WHERE p.id IS NULL
-      AND l.category = 'real_estate'
-      AND l.principal_name IS NOT NULL
-    ORDER BY l.filing_date DESC
+  // Find LLC/Corp owners with multiple non-homestead properties (active investors)
+  const { rows: llcOwners } = await db.query(`
+    SELECT p.owner_name, COUNT(*) as property_count,
+           SUM(p.assessed_value) as total_value,
+           p.owner_city, p.owner_state
+    FROM properties p
+    LEFT JOIN prospects pr ON pr.name = p.owner_name AND pr.source = 'property_data'
+    WHERE pr.id IS NULL
+      AND p.owner_name ~ '(LLC|INC|CORP|LP|TRUST|HOLDINGS|INVESTMENT|PROPERTIES|REALTY)'
+      AND p.homestead = FALSE
+    GROUP BY p.owner_name, p.owner_city, p.owner_state
+    HAVING COUNT(*) >= 2
+    ORDER BY COUNT(*) DESC
     LIMIT $1
   `, [limit]);
 
@@ -30,15 +34,15 @@ async function findProspects(limit = 50) {
 
   const prospects = [];
 
-  for (const llc of llcProspects) {
+  for (const owner of llcOwners) {
     prospects.push({
-      name: llc.principal_name,
-      company: llc.entity_name,
-      source: 'sunbiz',
-      source_id: llc.document_number,
-      address: llc.principal_address,
-      prospect_type: 'llc_filer',
-      notes: `Filed ${llc.entity_name} on ${llc.filing_date}`,
+      name: owner.owner_name,
+      company: owner.owner_name,
+      source: 'property_data',
+      source_id: owner.owner_name,
+      address: [owner.owner_city, owner.owner_state].filter(Boolean).join(', '),
+      prospect_type: 'multi_property_investor',
+      notes: `Owns ${owner.property_count} non-homestead properties (total value: $${(owner.total_value || 0).toLocaleString()})`,
     });
   }
 

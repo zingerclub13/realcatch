@@ -1,7 +1,5 @@
 const cron = require('node-cron');
 const { runFullScrape: scrapeVcpa } = require('../scrapers/vcpa');
-const { runSunbizScrape } = require('../scrapers/sunbiz');
-const { runForeclosureScrape } = require('../scrapers/foreclosure');
 const { runScoringEngine } = require('../scoring/engine');
 const { findProspects, sendOutreach } = require('../prospector/finder');
 const { sendDigests } = require('../prospector/emailer');
@@ -9,25 +7,14 @@ const { sendDigests } = require('../prospector/emailer');
 function startScheduler() {
   console.log('Starting cron scheduler...');
 
-  // Daily at 2 AM: scrape foreclosures
-  cron.schedule('0 2 * * *', async () => {
-    console.log('[CRON] Starting foreclosure scrape...');
+  // Weekly Sunday 2 AM: scrape VCPA Non-HX extracts (data updates weekly)
+  cron.schedule('0 2 * * 0', async () => {
+    console.log('[CRON] Starting VCPA property scrape...');
     try {
-      await runForeclosureScrape('volusia');
-      console.log('[CRON] Foreclosure scrape complete');
+      await scrapeVcpa();
+      console.log('[CRON] VCPA scrape complete');
     } catch (err) {
-      console.error('[CRON] Foreclosure scrape failed:', err.message);
-    }
-  });
-
-  // Daily at 3 AM: scrape Sunbiz new filings
-  cron.schedule('0 3 * * *', async () => {
-    console.log('[CRON] Starting Sunbiz scrape...');
-    try {
-      await runSunbizScrape(1);
-      console.log('[CRON] Sunbiz scrape complete');
-    } catch (err) {
-      console.error('[CRON] Sunbiz scrape failed:', err.message);
+      console.error('[CRON] VCPA scrape failed:', err.message);
     }
   });
 
