@@ -180,4 +180,35 @@ router.get('/plans', (req, res) => {
   res.json(PLANS);
 });
 
+// --- Admin: trigger scrape/scoring (protected by secret) ---
+router.post('/admin/scrape', async (req, res) => {
+  const secret = req.headers['x-admin-secret'];
+  if (!secret || secret !== process.env.SESSION_SECRET) {
+    return res.status(403).json({ error: 'Forbidden' });
+  }
+
+  const { action } = req.body;
+  try {
+    if (action === 'vcpa') {
+      const { runFullScrape } = require('../scrapers/vcpa');
+      const result = await runFullScrape();
+      return res.json({ success: true, action: 'vcpa', result });
+    }
+    if (action === 'score') {
+      const { runScoringEngine } = require('../scoring/engine');
+      const result = await runScoringEngine(20);
+      return res.json({ success: true, action: 'score', result });
+    }
+    if (action === 'prospects') {
+      const { findProspects } = require('../prospector/finder');
+      const result = await findProspects();
+      return res.json({ success: true, action: 'prospects', count: result.length });
+    }
+    return res.status(400).json({ error: 'Unknown action. Use: vcpa, score, prospects' });
+  } catch (err) {
+    console.error('Admin scrape error:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;
