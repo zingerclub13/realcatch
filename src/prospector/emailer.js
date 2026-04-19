@@ -1,21 +1,18 @@
-const Mailgun = require('mailgun.js');
-const formData = require('form-data');
+const { Resend } = require('resend');
 const db = require('../db/pool');
 
-const mailgun = new Mailgun(formData);
+const FROM_EMAIL = process.env.RESEND_FROM || 'RealCatch <leads@realcatch.io>';
 
-function getMailgunClient() {
-  if (!process.env.MAILGUN_API_KEY || !process.env.MAILGUN_DOMAIN) {
-    return null;
-  }
-  return mailgun.client({ username: 'api', key: process.env.MAILGUN_API_KEY });
+function getResendClient() {
+  if (!process.env.RESEND_API_KEY) return null;
+  return new Resend(process.env.RESEND_API_KEY);
 }
 
 // Send subscriber digest emails
 async function sendDigests(frequency = 'daily') {
-  const mg = getMailgunClient();
-  if (!mg) {
-    console.log('Mailgun not configured, skipping digests');
+  const resend = getResendClient();
+  if (!resend) {
+    console.log('Resend not configured, skipping digests');
     return 0;
   }
 
@@ -35,8 +32,8 @@ async function sendDigests(frequency = 'daily') {
       const html = buildDigestHtml(leads, sub);
       const subject = `RealCatch ${frequency === 'daily' ? 'Daily' : 'Weekly'} Intel - ${leads.length} New Lead${leads.length > 1 ? 's' : ''}`;
 
-      await mg.messages.create(process.env.MAILGUN_DOMAIN, {
-        from: `RealCatch <leads@${process.env.MAILGUN_DOMAIN}>`,
+      await resend.emails.send({
+        from: FROM_EMAIL,
         to: [sub.email],
         subject,
         html,
@@ -48,7 +45,7 @@ async function sendDigests(frequency = 'daily') {
       `, [sub.id, 'digest', subject]);
 
       sent++;
-      await new Promise(r => setTimeout(r, 1000));
+      await new Promise(r => setTimeout(r, 500));
     } catch (err) {
       console.error(`Failed to send digest to ${sub.email}:`, err.message);
     }
@@ -141,8 +138,8 @@ function buildDigestHtml(leads, subscriber) {
 
 // Send prospect outreach email with free sample
 async function sendProspectEmail(prospect) {
-  const mg = getMailgunClient();
-  if (!mg) throw new Error('Mailgun not configured');
+  const resend = getResendClient();
+  if (!resend) throw new Error('Resend not configured');
 
   // Get a couple hot leads as a free sample
   const { rows: sampleLeads } = await db.query(
@@ -173,8 +170,8 @@ async function sendProspectEmail(prospect) {
     </html>
   `;
 
-  await mg.messages.create(process.env.MAILGUN_DOMAIN, {
-    from: `RealCatch <hello@${process.env.MAILGUN_DOMAIN}>`,
+  await resend.emails.send({
+    from: process.env.RESEND_FROM || 'RealCatch <hello@realcatch.io>',
     to: [prospect.email],
     subject: `${prospect.name?.split(' ')[0] || 'Hey'} — free sample of AI-scored real estate leads`,
     html,
