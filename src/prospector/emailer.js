@@ -165,7 +165,7 @@ async function sendProspectEmail(prospect) {
       <p>We score properties on tax delinquency, absentee ownership, foreclosure proximity, and more — then send you a daily digest of the highest-scoring leads.</p>
       <div style="text-align: center; margin: 30px 0;">
         <a href="${process.env.BASE_URL || 'https://realcatch.io'}/signup" style="background: #4CAF50; color: white; padding: 14px 28px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 16px;">
-          Start Free Trial
+          Start 7-Day Trial — $1
         </a>
       </div>
       <p style="color: #666; font-size: 13px;">Plans start at $19/mo. Cancel anytime. Reply to this email with any questions.</p>
