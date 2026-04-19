@@ -90,18 +90,55 @@ app.get('/health', async (req, res) => {
   res.json(result);
 });
 
-// Start cron jobs in production
-if (process.env.NODE_ENV === 'production') {
+// Initialize database schema and start server
+async function start() {
+  // Run schema init at startup (internal DB URL only available at runtime, not build)
   try {
-    const { startScheduler } = require('./src/cron/scheduler');
-    startScheduler();
+    const db = require('./src/db/pool');
+    const fs = require('fs');
+    const schemaPath = path.join(__dirname, 'src', 'db', 'schema.sql');
+    const sql = fs.readFileSync(schemaPath, 'utf8');
+
+    // Drop legacy boilerplate tables
+    await db.query(`
+      DROP TABLE IF EXISTS bids CASCADE;
+      DROP TABLE IF EXISTS auctions CASCADE;
+      DROP TABLE IF EXISTS knex_migrations CASCADE;
+      DROP TABLE IF EXISTS knex_migrations_lock CASCADE;
+      DROP TABLE IF EXISTS users CASCADE;
+    `);
+
+    // Run each statement individually
+    const statements = sql.split(';').map(s => s.trim()).filter(s => s.length > 0 && !s.startsWith('--'));
+    for (const stmt of statements) {
+      try {
+        await db.query(stmt);
+      } catch (err) {
+        if (!err.message.includes('already exists')) {
+          console.error(`Schema statement failed: ${err.message}`);
+        }
+      }
+    }
+    console.log('Database schema ready');
   } catch (err) {
-    console.error('Scheduler init failed (non-fatal):', err.message);
+    console.error('DB init failed (non-fatal):', err.message);
   }
+
+  // Start cron jobs in production
+  if (process.env.NODE_ENV === 'production') {
+    try {
+      const { startScheduler } = require('./src/cron/scheduler');
+      startScheduler();
+    } catch (err) {
+      console.error('Scheduler init failed (non-fatal):', err.message);
+    }
+  }
+
+  app.listen(PORT, () => {
+    console.log(`RealCatch.io running on port ${PORT}`);
+  });
 }
 
-app.listen(PORT, () => {
-  console.log(`RealCatch.io running on port ${PORT}`);
-});
+start();
 
 module.exports = app;

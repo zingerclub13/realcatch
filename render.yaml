@@ -9,7 +9,7 @@ services:
     name: realcatch
     runtime: node
     plan: starter
-    buildCommand: npm install && node src/db/init.js
+    buildCommand: npm install
     startCommand: node server.js
     envVars:
       - key: NODE_ENV
