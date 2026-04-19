@@ -17,7 +17,29 @@ async function init() {
     `);
     console.log('Cleaned up legacy tables');
 
-    await db.query(sql);
+    // Run each statement individually so one failure doesn't block all
+    const statements = sql
+      .split(';')
+      .map(s => s.trim())
+      .filter(s => s.length > 0 && !s.startsWith('--'));
+
+    for (const stmt of statements) {
+      try {
+        await db.query(stmt);
+      } catch (err) {
+        // Ignore "already exists" errors for indexes
+        if (err.message.includes('already exists')) {
+          console.log(`  Skipped (already exists): ${stmt.substring(0, 60)}...`);
+        } else {
+          console.error(`  Statement failed: ${stmt.substring(0, 80)}...`);
+          console.error(`  Error: ${err.message}`);
+        }
+      }
+    }
+
+    // Verify tables
+    const tables = await db.query("SELECT tablename FROM pg_tables WHERE schemaname='public' ORDER BY tablename");
+    console.log('Tables created:', tables.rows.map(r => r.tablename).join(', '));
     console.log('Database schema initialized successfully');
   } catch (err) {
     console.error('Failed to initialize database:', err.message);
