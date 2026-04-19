@@ -13,11 +13,11 @@ CREATE TABLE IF NOT EXISTS properties (
   property_city VARCHAR(100),
   property_zip VARCHAR(10),
   property_type VARCHAR(50),
-  assessed_value INTEGER,
-  market_value INTEGER,
-  taxable_value INTEGER,
+  assessed_value BIGINT,
+  market_value BIGINT,
+  taxable_value BIGINT,
   last_sale_date DATE,
-  last_sale_price INTEGER,
+  last_sale_price BIGINT,
   homestead BOOLEAN DEFAULT FALSE,
   tax_delinquent BOOLEAN DEFAULT FALSE,
   tax_delinquent_amount NUMERIC(12,2),
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS foreclosures (
   plaintiff_name VARCHAR(255),
   auction_date DATE,
   opening_bid NUMERIC(12,2),
-  assessed_value INTEGER,
+  assessed_value BIGINT,
   status VARCHAR(50) DEFAULT 'scheduled',
   parcel_id VARCHAR(30),
   raw_data JSONB,
@@ -170,7 +170,7 @@ CREATE TABLE IF NOT EXISTS ownership_changes (
   old_owner VARCHAR(255),
   new_owner VARCHAR(255),
   sale_date DATE,
-  sale_price INTEGER,
+  sale_price BIGINT,
   detected_at TIMESTAMPTZ DEFAULT NOW()
 );
 
