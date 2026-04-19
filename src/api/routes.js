@@ -211,4 +211,21 @@ router.post('/admin/scrape', async (req, res) => {
   }
 });
 
+router.get('/admin/migrate', async (req, res) => {
+  const secret = req.headers['x-admin-secret'];
+  if (!secret || secret !== process.env.SESSION_SECRET) {
+    return res.status(403).json({ error: 'Forbidden' });
+  }
+  try {
+    await db.query('ALTER TABLE properties ALTER COLUMN assessed_value TYPE BIGINT');
+    await db.query('ALTER TABLE properties ALTER COLUMN market_value TYPE BIGINT');
+    await db.query('ALTER TABLE properties ALTER COLUMN taxable_value TYPE BIGINT');
+    await db.query('ALTER TABLE properties ALTER COLUMN last_sale_price TYPE BIGINT');
+    await db.query('ALTER TABLE ownership_changes ALTER COLUMN sale_price TYPE BIGINT');
+    res.json({ success: true, message: 'Migration successful' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;
